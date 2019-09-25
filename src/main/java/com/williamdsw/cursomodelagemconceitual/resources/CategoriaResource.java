@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.williamdsw.cursomodelagemconceitual.domain.CategoriaDomain;
+import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
 
 // Controlador REST que responde pelo endpoint "/categorias"
 @RestController
@@ -16,13 +16,13 @@ public class CategoriaResource
 {
 	// Indica que busca dados com "RequestMethod.GET"
 	@RequestMapping (method = RequestMethod.GET)
-	public List<CategoriaDomain> listar ()
+	public List<Categoria> listar ()
 	{
 		// Dados
-		CategoriaDomain informatica = new CategoriaDomain (1, "Informática");
-		CategoriaDomain escritorio = new CategoriaDomain (2, "Escritório");
+		Categoria informatica = new Categoria (1, "Informática");
+		Categoria escritorio = new Categoria (2, "Escritório");
 		
-		List<CategoriaDomain> categorias = new ArrayList<>();
+		List<Categoria> categorias = new ArrayList<>();
 		categorias.add (informatica);
 		categorias.add (escritorio);
 		

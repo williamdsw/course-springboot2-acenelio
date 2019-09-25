@@ -2,22 +2,31 @@ package com.williamdsw.cursomodelagemconceitual.domain;
 
 import java.io.Serializable;
 
-public class CategoriaDomain implements Serializable
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Categoria implements Serializable
 {
 	// ------------------------------------------------------------------------------------//
 	// CAMPOS
 
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 
 	// ------------------------------------------------------------------------------------//
 	// CONSTRUTORES
 
-	public CategoriaDomain ()
+	public Categoria ()
 	{}
 
-	public CategoriaDomain (Integer id, String nome)
+	public Categoria (Integer id, String nome)
 	{
 		this.id = id;
 		this.nome = nome;
@@ -59,7 +68,7 @@ public class CategoriaDomain implements Serializable
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CategoriaDomain other = (CategoriaDomain) obj;
+		Categoria other = (Categoria) obj;
 		if (id == null)
 		{
 			if (other.id != null)
