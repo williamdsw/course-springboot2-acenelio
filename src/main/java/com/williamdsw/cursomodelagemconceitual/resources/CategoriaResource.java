@@ -3,29 +3,31 @@ package com.williamdsw.cursomodelagemconceitual.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
+import com.williamdsw.cursomodelagemconceitual.services.CategoriaService;
 
 // Controlador REST que responde pelo endpoint "/categorias"
 @RestController
 @RequestMapping (value = "/categorias")
 public class CategoriaResource 
 {
-	// Indica que busca dados com "RequestMethod.GET"
-	@RequestMapping (method = RequestMethod.GET)
-	public List<Categoria> listar ()
+	@Autowired
+	private CategoriaService service;
+	
+	// RequestMethod.GET = Indica busca de dados
+	// @PathVariable = Indica que o valor sera recebido da URL
+	// ResponseEntity<?> = Encapsula varias informacoes de uma resposta HTTP
+	@RequestMapping (value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> buscarPorID (@PathVariable Integer id)
 	{
-		// Dados
-		Categoria informatica = new Categoria (1, "Informática");
-		Categoria escritorio = new Categoria (2, "Escritório");
-		
-		List<Categoria> categorias = new ArrayList<>();
-		categorias.add (informatica);
-		categorias.add (escritorio);
-		
-		return categorias;
+		Categoria categoria = service.buscarPorID (id);
+		return ResponseEntity.ok ().body (categoria);
 	}
 }
