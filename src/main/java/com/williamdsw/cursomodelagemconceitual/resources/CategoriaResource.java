@@ -1,8 +1,5 @@
 package com.williamdsw.cursomodelagemconceitual.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +15,14 @@ import com.williamdsw.cursomodelagemconceitual.services.CategoriaService;
 @RequestMapping (value = "/categorias")
 public class CategoriaResource 
 {
+	// ------------------------------------------------------------------------------------//
+	// CAMPOS
+	
 	@Autowired
 	private CategoriaService service;
+	
+	// ------------------------------------------------------------------------------------//
+	// FUNCOES AUXILIARES
 	
 	// RequestMethod.GET = Indica busca de dados
 	// @PathVariable = Indica que o valor sera recebido da URL
