@@ -15,11 +15,17 @@ import com.williamdsw.cursomodelagemconceitual.repositories.ProdutoRepository;
 @SpringBootApplication
 public class CursoModelagemConceitualApplication implements CommandLineRunner
 {
+	// ------------------------------------------------------------------------------------//
+	// CAMPOS
+	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	// ------------------------------------------------------------------------------------//
+	// MAIN
 	
 	public static void main (String[] args) 
 	{
