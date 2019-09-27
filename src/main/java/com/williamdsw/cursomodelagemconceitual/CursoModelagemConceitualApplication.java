@@ -1,5 +1,6 @@
 package com.williamdsw.cursomodelagemconceitual;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.williamdsw.cursomodelagemconceitual.domain.Cidade;
 import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.domain.Endereco;
 import com.williamdsw.cursomodelagemconceitual.domain.Estado;
+import com.williamdsw.cursomodelagemconceitual.domain.Pagamento;
+import com.williamdsw.cursomodelagemconceitual.domain.PagamentoComBoleto;
+import com.williamdsw.cursomodelagemconceitual.domain.PagamentoComCartao;
+import com.williamdsw.cursomodelagemconceitual.domain.Pedido;
 import com.williamdsw.cursomodelagemconceitual.domain.Produto;
+import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.TipoCliente;
 import com.williamdsw.cursomodelagemconceitual.repositories.CategoriaRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.CidadeRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.ClienteRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.EnderecoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.EstadoRepository;
+import com.williamdsw.cursomodelagemconceitual.repositories.PagamentoRepository;
+import com.williamdsw.cursomodelagemconceitual.repositories.PedidoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -43,6 +51,12 @@ public class CursoModelagemConceitualApplication implements CommandLineRunner
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 	
 	// ------------------------------------------------------------------------------------//
 	// MAIN
@@ -103,5 +117,24 @@ public class CursoModelagemConceitualApplication implements CommandLineRunner
 		// Salvando
 		clienteRepository.saveAll (Arrays.asList (mariaSilva));
 		enderecoRepository.saveAll (Arrays.asList (ruaFlores, avenidaMatos));
+		
+		// ---------- PEDIDO -- PAGAMENTO ---------- //
+		// Instancia com dados
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat ("dd/MM/yyyy HH:mm");
+		Pedido pedido1 = new Pedido (null, simpleDateFormat.parse ("27/09/2019 13:32"), mariaSilva, ruaFlores);
+		Pedido pedido2 = new Pedido (null, simpleDateFormat.parse ("27/10/2019 13:00"), mariaSilva, avenidaMatos);
+		
+		// Passando referencias
+		Pagamento pagamento1 = new PagamentoComCartao (null, EstadoPagamento.QUITADO, pedido1, 6);
+		pedido1.setPagamento (pagamento1);
+		
+		Pagamento pagamento2 = new PagamentoComBoleto (null, EstadoPagamento.PENDENTE, pedido2, simpleDateFormat.parse ("20/10/2019 00:00"), null);
+		pedido2.setPagamento (pagamento2);
+		
+		mariaSilva.getPedidos ().addAll (Arrays.asList (pedido1, pedido2));
+		
+		// Salvando
+		pedidoRepository.saveAll (Arrays.asList (pedido1, pedido2));
+		pagamentoRepository.saveAll (Arrays.asList (pagamento1, pagamento2));
 	}
 }
