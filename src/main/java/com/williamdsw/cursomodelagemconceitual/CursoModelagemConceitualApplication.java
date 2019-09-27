@@ -12,6 +12,7 @@ import com.williamdsw.cursomodelagemconceitual.domain.Cidade;
 import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.domain.Endereco;
 import com.williamdsw.cursomodelagemconceitual.domain.Estado;
+import com.williamdsw.cursomodelagemconceitual.domain.ItemPedido;
 import com.williamdsw.cursomodelagemconceitual.domain.Pagamento;
 import com.williamdsw.cursomodelagemconceitual.domain.PagamentoComBoleto;
 import com.williamdsw.cursomodelagemconceitual.domain.PagamentoComCartao;
@@ -24,6 +25,7 @@ import com.williamdsw.cursomodelagemconceitual.repositories.CidadeRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.ClienteRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.EnderecoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.EstadoRepository;
+import com.williamdsw.cursomodelagemconceitual.repositories.ItemPedidoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.PagamentoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.PedidoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.ProdutoRepository;
@@ -57,6 +59,9 @@ public class CursoModelagemConceitualApplication implements CommandLineRunner
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	// ------------------------------------------------------------------------------------//
 	// MAIN
@@ -136,5 +141,23 @@ public class CursoModelagemConceitualApplication implements CommandLineRunner
 		// Salvando
 		pedidoRepository.saveAll (Arrays.asList (pedido1, pedido2));
 		pagamentoRepository.saveAll (Arrays.asList (pagamento1, pagamento2));
+		
+		// ---------- ITEM PEDIDO ---------- //
+		// Instancia com dados
+		ItemPedido itemPedido1 = new ItemPedido (pedido1, computador, 0.00, 1, 2000.00);
+		ItemPedido itemPedido2 = new ItemPedido (pedido1, mouse, 0.00, 2, 80.00);
+		ItemPedido itemPedido3 = new ItemPedido (pedido2, impressora, 100.00, 1, 800.00);
+		
+		// Passando referencias
+		pedido1.getItens ().addAll (Arrays.asList (itemPedido1, itemPedido2));
+		pedido2.getItens ().addAll (Arrays.asList (itemPedido3));
+		computador.getItens ().addAll (Arrays.asList (itemPedido1));
+		impressora.getItens ().addAll (Arrays.asList (itemPedido3));
+		mouse.getItens ().addAll (Arrays.asList (itemPedido2));
+		
+		// Salvando
+		itemPedidoRepository.saveAll (Arrays.asList (itemPedido1, itemPedido2, itemPedido3));
+		
+		
 	}
 }
