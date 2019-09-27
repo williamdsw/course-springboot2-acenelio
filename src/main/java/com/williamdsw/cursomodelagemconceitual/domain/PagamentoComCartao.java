@@ -1,7 +1,6 @@
 package com.williamdsw.cursomodelagemconceitual.domain;
 
 import javax.persistence.Entity;
-
 import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 
 @Entity

@@ -1,9 +1,7 @@
 package com.williamdsw.cursomodelagemconceitual.domain;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 

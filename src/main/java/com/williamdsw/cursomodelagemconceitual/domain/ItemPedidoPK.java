@@ -1,7 +1,6 @@
 package com.williamdsw.cursomodelagemconceitual.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

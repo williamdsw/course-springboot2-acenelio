@@ -8,8 +8,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 
 // @Inheritance = Indica heranca
@@ -28,7 +27,7 @@ public abstract class Pagamento implements Serializable
 	
 	// @OneToOne = Indica relacionamento de 'um para um'
 	// @MapsId = Indica que o id sera o mesmo do pedido
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn (name = "pedido_id")
 	@MapsId
