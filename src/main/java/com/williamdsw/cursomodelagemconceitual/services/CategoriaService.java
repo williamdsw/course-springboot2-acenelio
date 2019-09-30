@@ -1,5 +1,6 @@
 package com.williamdsw.cursomodelagemconceitual.services;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,11 @@ public class CategoriaService
 	
 	// ------------------------------------------------------------------------------------//
 	// FUNCOES AUXILIARES
+	
+	public List<Categoria> findAll ()
+	{
+		return repository.findAll ();
+	}
 	
 	public Categoria findByID (Integer id)
 	{

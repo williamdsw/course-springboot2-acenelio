@@ -1,6 +1,10 @@
 package com.williamdsw.cursomodelagemconceitual.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
+import com.williamdsw.cursomodelagemconceitual.dto.CategoriaDTO;
 import com.williamdsw.cursomodelagemconceitual.services.CategoriaService;
 
 // Controlador REST que responde pelo endpoint "/categorias"
@@ -25,6 +30,14 @@ public class CategoriaResource
 	
 	// ------------------------------------------------------------------------------------//
 	// FUNCOES AUXILIARES
+	
+	@RequestMapping (method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll ()
+	{
+		List<Categoria> categorias = service.findAll ();
+		List<CategoriaDTO> categoriasDTO = categorias.stream ().map (categoria -> new CategoriaDTO (categoria)).collect (Collectors.toList ());
+		return ResponseEntity.ok ().body (categoriasDTO);
+	}
 	
 	// 1) RequestMethod.GET = Indica busca de dados
 	// 2) @PathVariable = Indica que o valor sera recebido da URL
