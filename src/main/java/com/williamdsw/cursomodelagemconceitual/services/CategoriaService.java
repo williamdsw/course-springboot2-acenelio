@@ -1,12 +1,12 @@
 package com.williamdsw.cursomodelagemconceitual.services;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
 import com.williamdsw.cursomodelagemconceitual.repositories.CategoriaRepository;
+import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
 
 // Indica servico
@@ -39,6 +39,20 @@ public class CategoriaService
 	{
 		findByID (categoria.getId ());
 		return repository.save (categoria);
+	}
+	
+	public void deleteByID (Integer id)
+	{
+		findByID (id);
+		
+		try
+		{
+			repository.deleteById (id);
+		}
+		catch (DataIntegrityViolationException exception)
+		{
+			throw new DataIntegrityException ("Não é possível excluir uma categoria que possui produtos!");
+		}
 	}
 }
  

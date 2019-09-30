@@ -36,7 +36,7 @@ public class CategoriaResource
 		return ResponseEntity.ok ().body (categoria);
 	}
 	
-	// 1) RequestMethod.POST = Indica insercao / alteracao de dados
+	// 1) RequestMethod.POST = Indica insercao de dados
 	// 2) @RequestBody = Indica que o valor JSON sera convertido automaticamente pra objeto
 	// 3) Criando URI de resposta necessaria
 	// 4) ResponseEntity.created (uri).build () = Cria URI de resposta '201' necessaria
@@ -48,12 +48,22 @@ public class CategoriaResource
 		return ResponseEntity.created (uri).build ();
 	}
 	
-	// No Update precisa combinar
+	// 1) RequestMethod.PUT = Indica alteracao de dados
+	// 2) No Update precisa combinar @RequestBody e @PathVariable
+	// 3) ResponseEntity.noContent ().build () = Indica mensagem de 204 de sucesso mas sem conteudo de retorno
 	@RequestMapping (value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update (@RequestBody Categoria categoria, @PathVariable Integer id)
 	{
 		categoria.setId (id);
 		categoria = service.update (categoria);
+		return ResponseEntity.noContent ().build ();
+	}
+	
+	// 1) RequestMethod.DELETE = Indica exclusao de dados
+	@RequestMapping (value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteByID (@PathVariable Integer id)
+	{
+		service.deleteByID (id);
 		return ResponseEntity.noContent ().build ();
 	}
 }
