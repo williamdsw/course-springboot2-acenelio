@@ -24,9 +24,9 @@ public class PedidoResource
 	// FUNCOES AUXILIARES
 	
 	@RequestMapping (value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> buscarPorID (@PathVariable Integer id)
+	public ResponseEntity<Pedido> findByID (@PathVariable Integer id)
 	{
-		Pedido pedido = service.buscarPorID (id);
+		Pedido pedido = service.findByID (id);
 		return ResponseEntity.ok ().body (pedido);
 	}
 }

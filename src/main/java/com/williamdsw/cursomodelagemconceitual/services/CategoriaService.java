@@ -23,15 +23,21 @@ public class CategoriaService
 	// ------------------------------------------------------------------------------------//
 	// FUNCOES AUXILIARES
 	
-	public Categoria buscarPorID (Integer id)
+	public Categoria findByID (Integer id)
 	{
 		Optional<Categoria> categoria = repository.findById (id);
 		return categoria.orElseThrow (() -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Categoria.class.getName ()));
 	}
 	
-	public Categoria inserir (Categoria categoria)
+	public Categoria insert (Categoria categoria)
 	{
 		categoria.setId (null);
+		return repository.save (categoria);
+	}
+	
+	public Categoria update (Categoria categoria)
+	{
+		findByID (categoria.getId ());
 		return repository.save (categoria);
 	}
 }

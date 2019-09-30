@@ -23,9 +23,9 @@ public class ClienteResource
 	// FUNCOES AUXILIARES
 	
 	@RequestMapping (value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> buscarPorID (@PathVariable Integer id)
+	public ResponseEntity<Cliente> findByID (@PathVariable Integer id)
 	{
-		Cliente cliente = service.buscarPorID (id);
+		Cliente cliente = service.findByID (id);
 		return ResponseEntity.ok ().body (cliente);
 	}
 }

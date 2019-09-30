@@ -22,7 +22,7 @@ public class PedidoService
 	// ------------------------------------------------------------------------------------//
 	// FUNCOES AUXILIARES
 	
-	public Pedido buscarPorID (Integer id)
+	public Pedido findByID (Integer id)
 	{
 		Optional<Pedido> pedido = repository.findById (id);
 		return pedido.orElseThrow (() -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Categoria.class.getName ()));

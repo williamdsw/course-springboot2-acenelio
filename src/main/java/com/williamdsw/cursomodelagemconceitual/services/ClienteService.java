@@ -19,7 +19,7 @@ public class ClienteService
 	// ------------------------------------------------------------------------------------//
 	// FUNCOES AUXILIARES
 	
-	public Cliente buscarPorID (Integer id)
+	public Cliente findByID (Integer id)
 	{
 		Optional<Cliente> cliente = repository.findById (id);
 		return cliente.orElseThrow (() -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Cliente.class.getName ()));
