@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
+import com.williamdsw.cursomodelagemconceitual.dto.CategoriaDTO;
 import com.williamdsw.cursomodelagemconceitual.repositories.CategoriaRepository;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
@@ -74,6 +75,11 @@ public class CategoriaService
 		{
 			throw new DataIntegrityException ("Não é possível excluir uma categoria que possui produtos!");
 		}
+	}
+	
+	public Categoria fromDTO (CategoriaDTO dto)
+	{
+		return new Categoria(dto.getId (), dto.getNome ());
 	}
 }
  
