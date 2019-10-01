@@ -2,15 +2,15 @@ package com.williamdsw.cursomodelagemconceitual.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
@@ -36,6 +36,21 @@ public class CategoriaResource
 	{
 		List<Categoria> categorias = service.findAll ();
 		List<CategoriaDTO> categoriasDTO = categorias.stream ().map (categoria -> new CategoriaDTO (categoria)).collect (Collectors.toList ());
+		return ResponseEntity.ok ().body (categoriasDTO);
+	}
+	
+	// 1) Sera chamado utilizando "/page" na URI
+	// 2) @RequestParam = Indica que e um parametro da requisicao
+	// 3) Page = classe que encapsula informacoes sobre a paginacao.
+	@RequestMapping (value = "/page", method = RequestMethod.GET)
+	public ResponseEntity<Page<CategoriaDTO>> findPage (
+			@RequestParam (value = "page" ,defaultValue = "0") Integer pageNumber, 
+			@RequestParam (value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam (value = "orderBy" , defaultValue = "nome") String orderBy, 
+			@RequestParam (value = "direction", defaultValue = "ASC") String direction)
+	{
+		Page<Categoria> categorias = service.findPage (pageNumber, linesPerPage, orderBy, direction);
+		Page<CategoriaDTO> categoriasDTO = categorias.map (categoria -> new CategoriaDTO (categoria));
 		return ResponseEntity.ok ().body (categoriasDTO);
 	}
 	

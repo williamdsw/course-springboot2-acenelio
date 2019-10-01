@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
 import com.williamdsw.cursomodelagemconceitual.repositories.CategoriaRepository;
@@ -24,29 +27,41 @@ public class CategoriaService
 	// ------------------------------------------------------------------------------------//
 	// FUNCOES AUXILIARES
 	
+	// Busca todos
 	public List<Categoria> findAll ()
 	{
 		return repository.findAll ();
 	}
 	
+	// Busca por ID
 	public Categoria findByID (Integer id)
 	{
 		Optional<Categoria> categoria = repository.findById (id);
 		return categoria.orElseThrow (() -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Categoria.class.getName ()));
 	}
 	
+	// Busca com paginacao
+	public Page<Categoria> findPage (Integer pageNumber, Integer linesPerPage, String orderBy, String direction)
+	{
+		PageRequest pageRequest = PageRequest.of (pageNumber, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repository.findAll (pageRequest);
+	}
+	
+	// Insere
 	public Categoria insert (Categoria categoria)
 	{
 		categoria.setId (null);
 		return repository.save (categoria);
 	}
 	
+	// Atualiza
 	public Categoria update (Categoria categoria)
 	{
 		findByID (categoria.getId ());
 		return repository.save (categoria);
 	}
 	
+	// Exclui por ID
 	public void deleteByID (Integer id)
 	{
 		findByID (id);

@@ -78,6 +78,12 @@ public class CursoModelagemConceitualApplication implements CommandLineRunner
 		// Instancias com dados
 		Categoria informatica = new Categoria (null, "Informática");
 		Categoria escritorio = new Categoria (null, "Escritório");
+		Categoria camaMesaBanho = new Categoria (null, "Cama, Mesa e Banho");
+		Categoria eletronicos = new Categoria (null, "Eletrônicos");
+		Categoria jardinagem = new Categoria (null, "Jardinagem");
+		Categoria decoracao = new Categoria (null, "Decoração");
+		Categoria perfumaria = new Categoria (null, "Perfumaria");
+		
 		Produto computador = new Produto (null, "Computador", 2000.00);
 		Produto impressora = new Produto (null, "Impressora", 800.00);
 		Produto mouse = new Produto (null, "Mouse", 80.00);
@@ -90,7 +96,7 @@ public class CursoModelagemConceitualApplication implements CommandLineRunner
 		mouse.getCategorias ().addAll (Arrays.asList (informatica));
 
 		// Salvando
-		categoriaRepository.saveAll (Arrays.asList (informatica, escritorio));
+		categoriaRepository.saveAll (Arrays.asList (informatica, escritorio, camaMesaBanho, eletronicos, jardinagem, decoracao, perfumaria));
 		produtoRepository.saveAll (Arrays.asList (computador, impressora, mouse));
 
 		// ---------- ESTADO -- CIDADE ---------- //
