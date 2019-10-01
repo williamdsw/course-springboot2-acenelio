@@ -55,11 +55,13 @@ public class CategoriaService
 		return repository.save (categoria);
 	}
 	
+	
 	// Atualiza
 	public Categoria update (Categoria categoria)
 	{
-		findByID (categoria.getId ());
-		return repository.save (categoria);
+		Categoria novaCategoria = findByID (categoria.getId());
+		updateData (novaCategoria, categoria);
+		return repository.save (novaCategoria);
 	}
 	
 	// Exclui por ID
@@ -80,6 +82,12 @@ public class CategoriaService
 	public Categoria fromDTO (CategoriaDTO dto)
 	{
 		return new Categoria(dto.getId (), dto.getNome ());
+	}
+	
+	// Atualiza dados
+	private void updateData (Categoria novaCategoria, Categoria categoria)
+	{
+		novaCategoria.setNome (categoria.getNome ());
 	}
 }
  
