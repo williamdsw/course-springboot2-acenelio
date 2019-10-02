@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteDTO;
+import com.williamdsw.cursomodelagemconceitual.dto.ClienteNewDTO;
 import com.williamdsw.cursomodelagemconceitual.services.ClienteService;
 
 @RestController
@@ -59,11 +60,11 @@ public class ClienteResource
 	}
 
 	@RequestMapping (method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody ClienteDTO categoriaDTO)
+	public ResponseEntity<Void> insert (@Valid @RequestBody ClienteNewDTO clienteNewDTO)
 	{
-		Cliente categoria = service.fromDTO (categoriaDTO);
-		categoria = service.insert (categoria);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest ().path ("/{id}").buildAndExpand (categoriaDTO.getId ()).toUri ();
+		Cliente cliente = service.fromDTO (clienteNewDTO);
+		cliente = service.insert (cliente);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest ().path ("/{id}").buildAndExpand (cliente.getId ()).toUri ();
 		return ResponseEntity.created (uri).build ();
 	}
 

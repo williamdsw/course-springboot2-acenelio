@@ -75,7 +75,7 @@ public class CategoriaResource
 	{
 		Categoria categoria = service.fromDTO (categoriaDTO);
 		categoria = service.insert (categoria);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest ().path ("/{id}").buildAndExpand (categoriaDTO.getId ()).toUri ();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest ().path ("/{id}").buildAndExpand (categoria.getId ()).toUri ();
 		return ResponseEntity.created (uri).build ();
 	}
 	

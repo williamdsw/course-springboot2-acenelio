@@ -2,15 +2,24 @@ package com.williamdsw.cursomodelagemconceitual.services;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+
+import com.williamdsw.cursomodelagemconceitual.domain.Cidade;
 import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
+import com.williamdsw.cursomodelagemconceitual.domain.Endereco;
+import com.williamdsw.cursomodelagemconceitual.domain.enums.TipoCliente;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteDTO;
+import com.williamdsw.cursomodelagemconceitual.dto.ClienteNewDTO;
 import com.williamdsw.cursomodelagemconceitual.repositories.ClienteRepository;
+import com.williamdsw.cursomodelagemconceitual.repositories.EnderecoRepository;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
 
@@ -22,6 +31,9 @@ public class ClienteService
 
 	@Autowired
 	private ClienteRepository repository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	// ------------------------------------------------------------------------------------//
 	// FUNCOES AUXILIARES
@@ -47,10 +59,13 @@ public class ClienteService
 	}
 
 	// Insere
+	@Transactional
 	public Cliente insert (Cliente cliente)
 	{
 		cliente.setId (null);
-		return repository.save (cliente);
+		cliente = repository.save (cliente);
+		enderecoRepository.saveAll (cliente.getEnderecos ());
+		return cliente;
 	}
 
 	// Atualiza
@@ -80,6 +95,24 @@ public class ClienteService
 	public Cliente fromDTO (ClienteDTO dto)
 	{
 		return new Cliente (dto.getId (), dto.getNome (), dto.getEmail (), null, null);
+	}
+	
+	public Cliente fromDTO (ClienteNewDTO dto)
+	{
+		Cliente cliente = new Cliente (null, dto.getNome (), dto.getEmail (), dto.getCpfOuCnpj (), TipoCliente.toEnum (dto.getTipoCliente ()));
+		Cidade cidade = new Cidade (dto.getCidadeID (), null, null);
+		Endereco endereco = new Endereco(null, dto.getLogradouro(), dto.getNumero(), dto.getComplemento(), dto.getBairro(), dto.getCep(), cliente, cidade);
+		cliente.getEnderecos ().add (endereco);
+		
+		for (String telefone : dto.getTelefones ())
+		{
+			if (telefone != null)
+			{
+				cliente.getTelefones ().add (telefone);
+			}
+		}
+		
+		return cliente;
 	}
 	
 	// Atualiza dados
