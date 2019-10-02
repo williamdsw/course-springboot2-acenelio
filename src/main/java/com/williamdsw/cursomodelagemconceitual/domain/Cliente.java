@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -31,7 +33,8 @@ public class Cliente implements Serializable
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	
-	@OneToMany (mappedBy = "cliente")
+	// cascade = Define comportamento em cascata da operacao nos Enderecos
+	@OneToMany (mappedBy = "cliente", cascade = CascadeType.ALL )
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	// Vai criar uma tabela com valores dessa colecao

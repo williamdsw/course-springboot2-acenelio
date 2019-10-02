@@ -2,16 +2,13 @@ package com.williamdsw.cursomodelagemconceitual.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-
 import com.williamdsw.cursomodelagemconceitual.domain.Cidade;
 import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.domain.Endereco;
@@ -87,7 +84,7 @@ public class ClienteService
 		}
 		catch (DataIntegrityViolationException exception)
 		{
-			throw new DataIntegrityException ("Não é possível excluir um Cliente!");
+			throw new DataIntegrityException ("Não é possível excluir por há pedidos relacionados!");
 		}
 	}
 
