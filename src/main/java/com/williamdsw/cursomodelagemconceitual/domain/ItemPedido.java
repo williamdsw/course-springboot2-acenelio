@@ -135,4 +135,12 @@ public class ItemPedido implements Serializable
         }
         return true;
     }
+    
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES AUXILIARES
+    
+    public double getSubtotal ()
+    {
+        return (preco - desconto) * quantidade;
+    }
 }

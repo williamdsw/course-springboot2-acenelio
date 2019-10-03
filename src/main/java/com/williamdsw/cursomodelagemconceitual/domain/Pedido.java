@@ -165,4 +165,18 @@ public class Pedido implements Serializable
         }
         return true;
     }
+    
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES AUXILIARES
+    
+    public double getValorTotal ()
+    {
+        double soma = 0;
+        for (ItemPedido itemPedido : itens)
+        {
+            soma += itemPedido.getSubtotal ();
+        }
+        
+        return soma;
+    }
 }
