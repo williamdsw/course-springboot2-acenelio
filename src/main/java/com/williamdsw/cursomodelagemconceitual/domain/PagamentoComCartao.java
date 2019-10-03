@@ -1,9 +1,11 @@
 package com.williamdsw.cursomodelagemconceitual.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import javax.persistence.Entity;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 
 @Entity
+@JsonTypeName (value = "pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento
 {
     // ------------------------------------------------------------------------------------//

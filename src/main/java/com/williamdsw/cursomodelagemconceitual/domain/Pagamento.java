@@ -9,11 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 
-// @Inheritance = Indica heranca
+// 1) @Inheritance = Indica heranca
+// 2) @JsonTypeInfo = Define que a classe tera um campo adicional chamado "@type"
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance (strategy = InheritanceType.JOINED)
+@JsonTypeInfo (use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable
 {
     // ------------------------------------------------------------------------------------//

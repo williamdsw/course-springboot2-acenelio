@@ -3,9 +3,12 @@ package com.williamdsw.cursomodelagemconceitual.domain;
 import java.util.Date;
 import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 
+// 1) @JsonTypeName = Define o nome do tipo no JSON
 @Entity
+@JsonTypeName (value = "pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento
 {
     // ------------------------------------------------------------------------------------//
