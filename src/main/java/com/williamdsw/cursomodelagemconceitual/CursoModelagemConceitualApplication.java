@@ -86,17 +86,39 @@ public class CursoModelagemConceitualApplication implements CommandLineRunner
         Produto computador = new Produto (null, "Computador", 2000.00);
         Produto impressora = new Produto (null, "Impressora", 800.00);
         Produto mouse = new Produto (null, "Mouse", 80.00);
+        Produto mesaDeEscritorio = new Produto (null, "Mesa de Escritório", 300.00);
+        Produto toalha = new Produto (null, "Toalha", 50.00);
+        Produto colcha = new Produto (null, "Colcha", 200.00);
+        Produto tvTrueColor = new Produto (null, "TV True Color", 1200.00);
+        Produto rocadeira = new Produto (null, "Roçadeira", 800.00);
+        Produto abajour = new Produto (null, "Abajour", 100.00);
+        Produto pendente = new Produto (null, "Pendente", 180.00);
+        Produto shampoo = new Produto (null, "Shampoo", 90.00);
 
         // Passando referencias
         informatica.getProdutos ().addAll (Arrays.asList (computador, impressora, mouse));
-        escritorio.getProdutos ().addAll (Arrays.asList (impressora));
-        computador.getCategorias ().addAll (Arrays.asList (informatica));
-        impressora.getCategorias ().addAll (Arrays.asList (informatica, escritorio));
-        mouse.getCategorias ().addAll (Arrays.asList (informatica));
+        escritorio.getProdutos ().addAll (Arrays.asList (impressora, mesaDeEscritorio));
+        camaMesaBanho.getProdutos ().addAll (Arrays.asList (toalha, colcha));
+        eletronicos.getProdutos ().addAll (Arrays.asList (computador, impressora, mouse, tvTrueColor));
+        jardinagem.getProdutos ().addAll (Arrays.asList (rocadeira));
+        decoracao.getProdutos ().addAll (Arrays.asList (abajour, pendente));
+        perfumaria.getProdutos ().addAll (Arrays.asList (shampoo));
+        
+        computador.getCategorias ().addAll (Arrays.asList (informatica, eletronicos));
+        impressora.getCategorias ().addAll (Arrays.asList (informatica, escritorio, eletronicos));
+        mouse.getCategorias ().addAll (Arrays.asList (informatica, eletronicos));
+        mesaDeEscritorio.getCategorias ().addAll (Arrays.asList (escritorio));
+        toalha.getCategorias ().addAll (Arrays.asList (camaMesaBanho));
+        colcha.getCategorias ().addAll (Arrays.asList (camaMesaBanho));
+        tvTrueColor.getCategorias ().addAll (Arrays.asList (eletronicos));
+        rocadeira.getCategorias ().addAll (Arrays.asList (jardinagem));
+        abajour.getCategorias ().addAll (Arrays.asList (decoracao));
+        pendente.getCategorias ().addAll (Arrays.asList (decoracao));
+        shampoo.getCategorias ().addAll (Arrays.asList (perfumaria));
 
         // Salvando
         categoriaRepository.saveAll (Arrays.asList (informatica, escritorio, camaMesaBanho, eletronicos, jardinagem, decoracao, perfumaria));
-        produtoRepository.saveAll (Arrays.asList (computador, impressora, mouse));
+        produtoRepository.saveAll (Arrays.asList (computador, impressora, mouse, mesaDeEscritorio, toalha, colcha, tvTrueColor, rocadeira, abajour, pendente, shampoo));
 
         // ---------- ESTADO -- CIDADE ---------- //
         // Instancias com dados
