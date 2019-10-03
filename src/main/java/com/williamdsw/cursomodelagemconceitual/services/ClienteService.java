@@ -23,99 +23,99 @@ import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoun
 @Service
 public class ClienteService
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	@Autowired
-	private ClienteRepository repository;
-	
-	@Autowired
-	private EnderecoRepository enderecoRepository;
+    @Autowired
+    private ClienteRepository repository;
 
-	// ------------------------------------------------------------------------------------//
-	// FUNCOES AUXILIARES
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
-	// Busca todos
-	public List<Cliente> findAll ()
-	{ 
-		return repository.findAll (); 
-	}
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES AUXILIARES
+    
+    // Busca todos
+    public List<Cliente> findAll ()
+    {
+        return repository.findAll ();
+    }
 
-	// Busca por ID
-	public Cliente findByID (Integer id)
-	{
-		Optional<Cliente> cliente = repository.findById (id);
-		return cliente.orElseThrow ( () -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Cliente.class.getName ()));
-	}
+    // Busca por ID
+    public Cliente findByID (Integer id)
+    {
+        Optional<Cliente> cliente = repository.findById (id);
+        return cliente.orElseThrow (() -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Cliente.class.getName ()));
+    }
 
-	// Busca com paginacao
-	public Page<Cliente> findPage (Integer pageNumber, Integer linesPerPage, String orderBy, String direction)
-	{
-		PageRequest pageRequest = PageRequest.of (pageNumber, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repository.findAll (pageRequest);
-	}
+    // Busca com paginacao
+    public Page<Cliente> findPage (Integer pageNumber, Integer linesPerPage, String orderBy, String direction)
+    {
+        PageRequest pageRequest = PageRequest.of (pageNumber, linesPerPage, Direction.valueOf (direction), orderBy);
+        return repository.findAll (pageRequest);
+    }
 
-	// Insere
-	@Transactional
-	public Cliente insert (Cliente cliente)
-	{
-		cliente.setId (null);
-		cliente = repository.save (cliente);
-		enderecoRepository.saveAll (cliente.getEnderecos ());
-		return cliente;
-	}
+    // Insere
+    @Transactional
+    public Cliente insert (Cliente cliente)
+    {
+        cliente.setId (null);
+        cliente = repository.save (cliente);
+        enderecoRepository.saveAll (cliente.getEnderecos ());
+        return cliente;
+    }
 
-	// Atualiza
-	public Cliente update (Cliente cliente)
-	{
-		Cliente novoCliente = findByID (cliente.getId());
-		updateData (novoCliente, cliente);
-		return repository.save (novoCliente);
-	}
+    // Atualiza
+    public Cliente update (Cliente cliente)
+    {
+        Cliente novoCliente = findByID (cliente.getId ());
+        updateData (novoCliente, cliente);
+        return repository.save (novoCliente);
+    }
 
-	// Exclui por ID
-	public void deleteByID (Integer id)
-	{
-		findByID (id);
+    // Exclui por ID
+    public void deleteByID (Integer id)
+    {
+        findByID (id);
 
-		try
-		{
-			repository.deleteById (id);
-		}
-		catch (DataIntegrityViolationException exception)
-		{
-			throw new DataIntegrityException ("Não é possível excluir por há pedidos relacionados!");
-		}
-	}
+        try
+        {
+            repository.deleteById (id);
+        }
+        catch (DataIntegrityViolationException exception)
+        {
+            throw new DataIntegrityException ("Não é possível excluir por há pedidos relacionados!");
+        }
+    }
 
-	// Converte dados
-	public Cliente fromDTO (ClienteDTO dto)
-	{
-		return new Cliente (dto.getId (), dto.getNome (), dto.getEmail (), null, null);
-	}
-	
-	public Cliente fromDTO (ClienteNewDTO dto)
-	{
-		Cliente cliente = new Cliente (null, dto.getNome (), dto.getEmail (), dto.getCpfOuCnpj (), TipoCliente.toEnum (dto.getTipoCliente ()));
-		Cidade cidade = new Cidade (dto.getCidadeID (), null, null);
-		Endereco endereco = new Endereco(null, dto.getLogradouro(), dto.getNumero(), dto.getComplemento(), dto.getBairro(), dto.getCep(), cliente, cidade);
-		cliente.getEnderecos ().add (endereco);
-		
-		for (String telefone : dto.getTelefones ())
-		{
-			if (telefone != null)
-			{
-				cliente.getTelefones ().add (telefone);
-			}
-		}
-		
-		return cliente;
-	}
-	
-	// Atualiza dados
-	private void updateData (Cliente novoCliente, Cliente cliente)
-	{
-		novoCliente.setNome (cliente.getNome ());
-		novoCliente.setEmail (cliente.getEmail ());
-	}
+    // Converte dados
+    public Cliente fromDTO (ClienteDTO dto)
+    {
+        return new Cliente (dto.getId (), dto.getNome (), dto.getEmail (), null, null);
+    }
+
+    public Cliente fromDTO (ClienteNewDTO dto)
+    {
+        Cliente cliente = new Cliente (null, dto.getNome (), dto.getEmail (), dto.getCpfOuCnpj (), TipoCliente.toEnum (dto.getTipoCliente ()));
+        Cidade cidade = new Cidade (dto.getCidadeID (), null, null);
+        Endereco endereco = new Endereco (null, dto.getLogradouro (), dto.getNumero (), dto.getComplemento (), dto.getBairro (), dto.getCep (), cliente, cidade);
+        cliente.getEnderecos ().add (endereco);
+
+        dto.getTelefones ().forEach (telefone ->
+        {
+            if (telefone != null)
+            {
+                cliente.getTelefones ().add (telefone);
+            }
+        });
+
+        return cliente;
+    }
+
+    // Atualiza dados
+    private void updateData (Cliente novoCliente, Cliente cliente)
+    {
+        novoCliente.setNome (cliente.getNome ());
+        novoCliente.setEmail (cliente.getEmail ());
+    }
 }

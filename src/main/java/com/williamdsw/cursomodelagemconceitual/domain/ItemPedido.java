@@ -8,98 +8,131 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido implements Serializable
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
-	
-	private static final long serialVersionUID = 1L;
-	
-	// @JsonIgnore = Sera ignorado pela serializacao
-	// @EmbeddedId = Indica um ID embutido em um tipo auxiliar
-	@JsonIgnore
-	@EmbeddedId
-	private ItemPedidoPK id = new ItemPedidoPK ();
-	
-	private Double desconto;
-	private Integer quantidade;
-	private Double preco;
-	
-	// ------------------------------------------------------------------------------------//
-	// CONSTRUTORES
-	
-	public ItemPedido () {}
-	public ItemPedido (Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco)
-	{
-		super();
-		this.id.setPedido (pedido);
-		this.id.setProduto (produto);
-		this.desconto = desconto;
-		this.quantidade = quantidade;
-		this.preco = preco;
-	}
-	
-	// ------------------------------------------------------------------------------------//
-	// GETTERS / SETTERS
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	public ItemPedidoPK getId ()
-	{ return id; }
+    private static final long serialVersionUID = 1L;
 
-	public void setId (ItemPedidoPK id)
-	{ this.id = id; }
-	
-	@JsonIgnore
-	public Pedido getPedido ()
-	{ return id.getPedido (); }
-	
-	public Produto getProduto ()
-	{ return id.getProduto (); }
+    // @JsonIgnore = Sera ignorado pela serializacao
+    // @EmbeddedId = Indica um ID embutido em um tipo auxiliar
+    @JsonIgnore
+    @EmbeddedId
+    private ItemPedidoPK id = new ItemPedidoPK ();
 
-	public Double getDesconto ()
-	{ return desconto; }
+    private Double desconto;
+    private Integer quantidade;
+    private Double preco;
 
-	public void setDesconto (Double desconto)
-	{ this.desconto = desconto; }
+    // ------------------------------------------------------------------------------------//
+    // CONSTRUTORES
+    
+    public ItemPedido ()
+    {
+    }
 
-	public Integer getQuantidade ()
-	{ return quantidade; }
+    public ItemPedido (Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco)
+    {
+        super ();
+        this.id.setPedido (pedido);
+        this.id.setProduto (produto);
+        this.desconto = desconto;
+        this.quantidade = quantidade;
+        this.preco = preco;
+    }
 
-	public void setQuantidade (Integer quantidade)
-	{ this.quantidade = quantidade; }
+    // ------------------------------------------------------------------------------------//
+    // GETTERS / SETTERS
+    
+    public ItemPedidoPK getId ()
+    {
+        return id;
+    }
 
-	public Double getPreco ()
-	{ return preco; }
+    public void setId (ItemPedidoPK id)
+    {
+        this.id = id;
+    }
 
-	public void setPreco (Double preco)
-	{ this.preco = preco; }
-	
-	// ------------------------------------------------------------------------------------//
-	// FUNCOES IMPLEMENTADAS
+    @JsonIgnore
+    public Pedido getPedido ()
+    {
+        return id.getPedido ();
+    }
 
-	@Override
-	public int hashCode ()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public Produto getProduto ()
+    {
+        return id.getProduto ();
+    }
 
-	@Override
-	public boolean equals (Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ItemPedido other = (ItemPedido) obj;
-		if (id == null)
-		{
-			if (other.id != null)
-				return false;
-		}
-		else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+    public Double getDesconto ()
+    {
+        return desconto;
+    }
+
+    public void setDesconto (Double desconto)
+    {
+        this.desconto = desconto;
+    }
+
+    public Integer getQuantidade ()
+    {
+        return quantidade;
+    }
+
+    public void setQuantidade (Integer quantidade)
+    {
+        this.quantidade = quantidade;
+    }
+
+    public Double getPreco ()
+    {
+        return preco;
+    }
+
+    public void setPreco (Double preco)
+    {
+        this.preco = preco;
+    }
+
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES IMPLEMENTADAS
+    
+    @Override
+    public int hashCode ()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode ());
+        return result;
+    }
+
+    @Override
+    public boolean equals (Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass () != obj.getClass ())
+        {
+            return false;
+        }
+        ItemPedido other = (ItemPedido) obj;
+        if (id == null)
+        {
+            if (other.id != null)
+            {
+                return false;
+            }
+        }
+        else if (!id.equals (other.id))
+        {
+            return false;
+        }
+        return true;
+    }
 }

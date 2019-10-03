@@ -19,126 +19,171 @@ import com.williamdsw.cursomodelagemconceitual.domain.enums.TipoCliente;
 @Entity
 public class Cliente implements Serializable
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String nome;
-	private String email;
-	private String cpfOuCnpj;
-	private Integer tipoCliente;
-	
-	// cascade = Define comportamento em cascata da operacao nos Enderecos
-	@OneToMany (mappedBy = "cliente", cascade = CascadeType.ALL )
-	private List<Endereco> enderecos = new ArrayList<>();
-	
-	// Vai criar uma tabela com valores dessa colecao
-	@ElementCollection
-	@CollectionTable (name = "telefone")
-	private Set<String> telefones = new HashSet<>();
-	
-	@JsonIgnore
-	@OneToMany (mappedBy = "cliente")
-	private List<Pedido> pedidos = new ArrayList<>();
-	
-	// ------------------------------------------------------------------------------------//
-	// CONSTRUTORES
-	
-	public Cliente () {}
-	public Cliente (Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente)
-	{
-		super ();
-		this.id = id;
-		this.nome = nome;
-		this.email = email;
-		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipoCliente = (tipoCliente == null ? null : tipoCliente.getCodigo ());
-	}
-	
-	// ------------------------------------------------------------------------------------//
-	// GETTERS / SETTERS
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	public Integer getId ()
-	{ return id; }
+    private static final long serialVersionUID = 1L;
 
-	public void setId (Integer id)
-	{ this.id = id; }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String nome;
+    private String email;
+    private String cpfOuCnpj;
+    private Integer tipoCliente;
 
-	public String getNome ()
-	{ return nome; }
+    // cascade = Define comportamento em cascata da operacao nos Enderecos
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Endereco> enderecos = new ArrayList<> ();
 
-	public void setNome (String nome)
-	{ this.nome = nome; }
+    // Vai criar uma tabela com valores dessa colecao
+    @ElementCollection
+    @CollectionTable(name = "telefone")
+    private Set<String> telefones = new HashSet<> ();
 
-	public String getEmail ()
-	{ return email; }
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos = new ArrayList<> ();
 
-	public void setEmail (String email)
-	{ this.email = email; }
+    // ------------------------------------------------------------------------------------//
+    // CONSTRUTORES
+    
+    public Cliente ()
+    {
+    }
 
-	public String getCpfOuCnpj ()
-	{ return cpfOuCnpj; }
+    public Cliente (Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente)
+    {
+        super ();
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.tipoCliente = (tipoCliente == null ? null : tipoCliente.getCodigo ());
+    }
 
-	public void setCpfOuCnpj (String cpfOuCnpj)
-	{ this.cpfOuCnpj = cpfOuCnpj; }
+    // ------------------------------------------------------------------------------------//
+    // GETTERS / SETTERS
+    
+    public Integer getId ()
+    {
+        return id;
+    }
 
-	public TipoCliente getTipoCliente ()
-	{ return TipoCliente.toEnum (tipoCliente); }
+    public void setId (Integer id)
+    {
+        this.id = id;
+    }
 
-	public void setTipoCliente (TipoCliente tipoCliente)
-	{ this.tipoCliente = tipoCliente.getCodigo (); }
+    public String getNome ()
+    {
+        return nome;
+    }
 
-	public List<Endereco> getEnderecos ()
-	{ return this.enderecos; }
+    public void setNome (String nome)
+    {
+        this.nome = nome;
+    }
 
-	public void setEnderecos (List<Endereco> enderecos)
-	{ this.enderecos = enderecos; }
+    public String getEmail ()
+    {
+        return email;
+    }
 
-	public Set<String> getTelefones ()
-	{ return telefones; }
+    public void setEmail (String email)
+    {
+        this.email = email;
+    }
 
-	public void setTelefones (Set<String> telefones)
-	{ this.telefones = telefones; }
-	
-	public List<Pedido> getPedidos ()
-	{ return this.pedidos; }
-	
-	public void setPedidos (List<Pedido> pedidos)
-	{ this.pedidos = pedidos; }
-	
-	// ------------------------------------------------------------------------------------//
-	// FUNCOES IMPLEMENTADAS
+    public String getCpfOuCnpj ()
+    {
+        return cpfOuCnpj;
+    }
 
-	@Override
-	public int hashCode ()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public void setCpfOuCnpj (String cpfOuCnpj)
+    {
+        this.cpfOuCnpj = cpfOuCnpj;
+    }
 
-	@Override
-	public boolean equals (Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (id == null)
-		{
-			if (other.id != null)
-				return false;
-		}
-		else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+    public TipoCliente getTipoCliente ()
+    {
+        return TipoCliente.toEnum (tipoCliente);
+    }
+
+    public void setTipoCliente (TipoCliente tipoCliente)
+    {
+        this.tipoCliente = tipoCliente.getCodigo ();
+    }
+
+    public List<Endereco> getEnderecos ()
+    {
+        return this.enderecos;
+    }
+
+    public void setEnderecos (List<Endereco> enderecos)
+    {
+        this.enderecos = enderecos;
+    }
+
+    public Set<String> getTelefones ()
+    {
+        return telefones;
+    }
+
+    public void setTelefones (Set<String> telefones)
+    {
+        this.telefones = telefones;
+    }
+
+    public List<Pedido> getPedidos ()
+    {
+        return this.pedidos;
+    }
+
+    public void setPedidos (List<Pedido> pedidos)
+    {
+        this.pedidos = pedidos;
+    }
+
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES IMPLEMENTADAS
+    
+    @Override
+    public int hashCode ()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode ());
+        return result;
+    }
+
+    @Override
+    public boolean equals (Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass () != obj.getClass ())
+        {
+            return false;
+        }
+        Cliente other = (Cliente) obj;
+        if (id == null)
+        {
+            if (other.id != null)
+            {
+                return false;
+            }
+        }
+        else if (!id.equals (other.id))
+        {
+            return false;
+        }
+        return true;
+    }
 }

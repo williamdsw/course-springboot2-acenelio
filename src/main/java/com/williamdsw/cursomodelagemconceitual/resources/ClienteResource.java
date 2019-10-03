@@ -23,65 +23,64 @@ import com.williamdsw.cursomodelagemconceitual.services.ClienteService;
 @RequestMapping (value = "/clientes")
 public class ClienteResource
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	@Autowired
-	private ClienteService service;
+    @Autowired
+    private ClienteService service;
 
-	// ------------------------------------------------------------------------------------//
-	// FUNCOES AUXILIARES
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES AUXILIARES
+    @RequestMapping (method = RequestMethod.GET)
+    public ResponseEntity<List<ClienteDTO>> findAll ()
+    {
+        List<Cliente> categorias = service.findAll ();
+        List<ClienteDTO> categoriasDTO = categorias.stream ().map (categoria -> new ClienteDTO (categoria)).collect (Collectors.toList ());
+        return ResponseEntity.ok ().body (categoriasDTO);
+    }
 
-	@RequestMapping (method = RequestMethod.GET)
-	public ResponseEntity<List<ClienteDTO>> findAll ()
-	{
-		List<Cliente> categorias = service.findAll ();
-		List<ClienteDTO> categoriasDTO = categorias.stream ().map(categoria -> new ClienteDTO (categoria)).collect (Collectors.toList ());
-		return ResponseEntity.ok ().body (categoriasDTO);
-	}
+    @RequestMapping (value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<ClienteDTO>> findPage (
+            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction)
+    {
+        Page<Cliente> categorias = service.findPage (pageNumber, linesPerPage, orderBy, direction);
+        Page<ClienteDTO> categoriasDTO = categorias.map (categoria -> new ClienteDTO (categoria));
+        return ResponseEntity.ok ().body (categoriasDTO);
+    }
 
-	@RequestMapping (value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ClienteDTO>> findPage (
-			@RequestParam (value = "page", defaultValue = "0") Integer pageNumber,
-			@RequestParam (value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam (value = "orderBy", defaultValue = "nome") String orderBy,
-			@RequestParam (value = "direction", defaultValue = "ASC") String direction)
-	{
-		Page<Cliente> categorias = service.findPage (pageNumber, linesPerPage, orderBy, direction);
-		Page<ClienteDTO> categoriasDTO = categorias.map (categoria -> new ClienteDTO (categoria));
-		return ResponseEntity.ok ().body (categoriasDTO);
-	}
+    @RequestMapping (value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Cliente> findByID (@PathVariable Integer id)
+    {
+        Cliente cliente = service.findByID (id);
+        return ResponseEntity.ok ().body (cliente);
+    }
 
-	@RequestMapping (value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Cliente> findByID (@PathVariable Integer id)
-	{
-		Cliente cliente = service.findByID (id);
-		return ResponseEntity.ok ().body (cliente);
-	}
+    @RequestMapping (method = RequestMethod.POST)
+    public ResponseEntity<Void> insert (@Valid @RequestBody ClienteNewDTO clienteNewDTO)
+    {
+        Cliente cliente = service.fromDTO (clienteNewDTO);
+        cliente = service.insert (cliente);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest ().path ("/{id}").buildAndExpand (cliente.getId ()).toUri ();
+        return ResponseEntity.created (uri).build ();
+    }
 
-	@RequestMapping (method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody ClienteNewDTO clienteNewDTO)
-	{
-		Cliente cliente = service.fromDTO (clienteNewDTO);
-		cliente = service.insert (cliente);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest ().path ("/{id}").buildAndExpand (cliente.getId ()).toUri ();
-		return ResponseEntity.created (uri).build ();
-	}
+    @RequestMapping (value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> update (@Valid @RequestBody ClienteDTO categoriaDTO, @PathVariable Integer id)
+    {
+        Cliente categoria = service.fromDTO (categoriaDTO);
+        categoria.setId (id);
+        categoria = service.update (categoria);
+        return ResponseEntity.noContent ().build ();
+    }
 
-	@RequestMapping (value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update (@Valid @RequestBody ClienteDTO categoriaDTO, @PathVariable Integer id)
-	{
-		Cliente categoria = service.fromDTO (categoriaDTO);
-		categoria.setId (id);
-		categoria = service.update (categoria);
-		return ResponseEntity.noContent ().build ();
-	}
-
-	// 1) RequestMethod.DELETE = Indica exclusao de dados
-	@RequestMapping (value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteByID (@PathVariable Integer id)
-	{
-		service.deleteByID (id);
-		return ResponseEntity.noContent ().build ();
-	}
+    // 1) RequestMethod.DELETE = Indica exclusao de dados
+    @RequestMapping (value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteByID (@PathVariable Integer id)
+    {
+        service.deleteByID (id);
+        return ResponseEntity.noContent ().build ();
+    }
 }

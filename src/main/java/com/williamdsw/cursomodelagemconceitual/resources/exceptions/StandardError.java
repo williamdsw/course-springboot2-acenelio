@@ -4,43 +4,55 @@ import java.io.Serializable;
 
 public class StandardError implements Serializable
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
-	
-	private static final long serialVersionUID = 1L;
-	private Integer status;
-	private String message;
-	private Long timestamp;
-	
-	// ------------------------------------------------------------------------------------//
-	// CONSTRUTOR
-	
-	public StandardError (Integer status, String message, Long timestamp)
-	{
-		super ();
-		this.status = status;
-		this.message = message;
-		this.timestamp = timestamp;
-	}
-	
-	// ------------------------------------------------------------------------------------//
-	// GETTERS / SETTERS
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	public Integer getStatus ()
-	{ return status; }
+    private static final long serialVersionUID = 1L;
+    private Integer status;
+    private String message;
+    private Long timestamp;
 
-	public void setStatus (Integer status)
-	{ this.status = status; }
+    // ------------------------------------------------------------------------------------//
+    // CONSTRUTOR
+    
+    public StandardError (Integer status, String message, Long timestamp)
+    {
+        super ();
+        this.status = status;
+        this.message = message;
+        this.timestamp = timestamp;
+    }
 
-	public String getMessage ()
-	{ return message; }
+    // ------------------------------------------------------------------------------------//
+    // GETTERS / SETTERS
+    
+    public Integer getStatus ()
+    {
+        return status;
+    }
 
-	public void setMessage (String message)
-	{ this.message = message; }
+    public void setStatus (Integer status)
+    {
+        this.status = status;
+    }
 
-	public Long getTimestamp ()
-	{ return timestamp; }
+    public String getMessage ()
+    {
+        return message;
+    }
 
-	public void setTimestamp (Long timestamp)
-	{ this.timestamp = timestamp; }
+    public void setMessage (String message)
+    {
+        this.message = message;
+    }
+
+    public Long getTimestamp ()
+    {
+        return timestamp;
+    }
+
+    public void setTimestamp (Long timestamp)
+    {
+        this.timestamp = timestamp;
+    }
 }

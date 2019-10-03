@@ -11,117 +11,161 @@ import com.williamdsw.cursomodelagemconceitual.services.validation.ClienteInsert
 @ClienteInsert
 public class ClienteNewDTO implements Serializable
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
-	
-	private static final long serialVersionUID = 1L;
-	
-	// CLIENTE
-	
-	@NotEmpty (message = "Preenchimento obrigatório!")
-	@Length (min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
-	private String nome;
-	
-	@NotEmpty (message = "Preenchimento obrigatório!")
-	@Email (message = "Email inválido")
-	private String email;
-	
-	@NotEmpty (message = "Preenchimento obrigatório!")
-	private String cpfOuCnpj;
-	
-	private Integer tipoCliente;
-	
-	// ENDERECO
-	
-	@NotEmpty (message = "Preenchimento obrigatório!")
-	private String logradouro;
-	
-	@NotEmpty (message = "Preenchimento obrigatório!")
-	private String numero;
-	
-	private String complemento;
-	private String bairro;
-	
-	@NotEmpty (message = "Preenchimento obrigatório!")
-	private String cep;
-	
-	// TELEFONE
-	private List<String> telefones = new ArrayList<>(); 
-	
-	// CIDADE
-	private Integer cidadeID;
-	
-	// ------------------------------------------------------------------------------------//
-	// CONSTRUTORES
-	
-	public ClienteNewDTO () {}
-	
-	// ------------------------------------------------------------------------------------//
-	// GETTERS / SETTERS
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	public String getNome ()
-	{ return nome; }
+    private static final long serialVersionUID = 1L;
 
-	public void setNome (String nome)
-	{ this.nome = nome; }
+    // CLIENTE
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    @Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
+    private String nome;
 
-	public String getEmail ()
-	{ return email; }
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    @Email(message = "Email inválido")
+    private String email;
 
-	public void setEmail (String email)
-	{ this.email = email; }
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    private String cpfOuCnpj;
 
-	public String getCpfOuCnpj ()
-	{ return cpfOuCnpj; }
+    private Integer tipoCliente;
 
-	public void setCpfOuCnpj (String cpfOuCnpj)
-	{ this.cpfOuCnpj = cpfOuCnpj; }
+    // ENDERECO
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    private String logradouro;
 
-	public Integer getTipoCliente ()
-	{ return tipoCliente; }
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    private String numero;
 
-	public void setTipoCliente (Integer tipoCliente)
-	{ this.tipoCliente = tipoCliente; }
+    private String complemento;
+    private String bairro;
 
-	public String getLogradouro ()
-	{ return logradouro; }
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    private String cep;
 
-	public void setLogradouro (String logradouro)
-	{ this.logradouro = logradouro; }
+    // TELEFONE
+    private List<String> telefones = new ArrayList<> ();
 
-	public String getNumero ()
-	{ return numero; }
+    // CIDADE
+    private Integer cidadeID;
 
-	public void setNumero (String numero)
-	{ this.numero = numero; }
+    // ------------------------------------------------------------------------------------//
+    // CONSTRUTORES
+    
+    public ClienteNewDTO ()
+    {
+    }
 
-	public String getComplemento ()
-	{ return complemento; }
+    // ------------------------------------------------------------------------------------//
+    // GETTERS / SETTERS
+    
+    public String getNome ()
+    {
+        return nome;
+    }
 
-	public void setComplemento (String complemento)
-	{ this.complemento = complemento; }
+    public void setNome (String nome)
+    {
+        this.nome = nome;
+    }
 
-	public String getBairro ()
-	{ return bairro; }
+    public String getEmail ()
+    {
+        return email;
+    }
 
-	public void setBairro (String bairro)
-	{ this.bairro = bairro; }
+    public void setEmail (String email)
+    {
+        this.email = email;
+    }
 
-	public String getCep ()
-	{ return cep; }
+    public String getCpfOuCnpj ()
+    {
+        return cpfOuCnpj;
+    }
 
-	public void setCep (String cep)
-	{ this.cep = cep; }
+    public void setCpfOuCnpj (String cpfOuCnpj)
+    {
+        this.cpfOuCnpj = cpfOuCnpj;
+    }
 
-	public List<String> getTelefones ()
-	{ return telefones; }
+    public Integer getTipoCliente ()
+    {
+        return tipoCliente;
+    }
 
-	public void setTelefones (List<String> telefones)
-	{ this.telefones = telefones; }
+    public void setTipoCliente (Integer tipoCliente)
+    {
+        this.tipoCliente = tipoCliente;
+    }
 
-	public Integer getCidadeID ()
-	{ return cidadeID; }
+    public String getLogradouro ()
+    {
+        return logradouro;
+    }
 
-	public void setCidadeID (Integer cidadeID)
-	{ this.cidadeID = cidadeID; }
+    public void setLogradouro (String logradouro)
+    {
+        this.logradouro = logradouro;
+    }
+
+    public String getNumero ()
+    {
+        return numero;
+    }
+
+    public void setNumero (String numero)
+    {
+        this.numero = numero;
+    }
+
+    public String getComplemento ()
+    {
+        return complemento;
+    }
+
+    public void setComplemento (String complemento)
+    {
+        this.complemento = complemento;
+    }
+
+    public String getBairro ()
+    {
+        return bairro;
+    }
+
+    public void setBairro (String bairro)
+    {
+        this.bairro = bairro;
+    }
+
+    public String getCep ()
+    {
+        return cep;
+    }
+
+    public void setCep (String cep)
+    {
+        this.cep = cep;
+    }
+
+    public List<String> getTelefones ()
+    {
+        return telefones;
+    }
+
+    public void setTelefones (List<String> telefones)
+    {
+        this.telefones = telefones;
+    }
+
+    public Integer getCidadeID ()
+    {
+        return cidadeID;
+    }
+
+    public void setCidadeID (Integer cidadeID)
+    {
+        this.cidadeID = cidadeID;
+    }
 }

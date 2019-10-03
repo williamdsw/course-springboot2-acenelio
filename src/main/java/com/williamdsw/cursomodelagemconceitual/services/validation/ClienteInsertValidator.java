@@ -14,48 +14,48 @@ import com.williamdsw.cursomodelagemconceitual.services.validation.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO>
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
-	
-	@Autowired
-	private ClienteRepository repository;
-	
-	// ------------------------------------------------------------------------------------//
-	// IMPLEMENTADOS
-	
-	@Override
-	public void initialize (ClienteInsert ann) { }
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	@Override
-	public boolean isValid (ClienteNewDTO dto, ConstraintValidatorContext context)
-	{ 
-		List<FieldMessage> errors = new ArrayList<>();
-		
-		// Verifica CPF
-		if (dto.getTipoCliente ().equals (TipoCliente.PESSOA_FISICA.getCodigo ()) && !BR.isValidCPF (dto.getCpfOuCnpj ()))
-		{
-			errors.add (new FieldMessage ("cpfOuCnpj", "CPF inválido!"));
-		}
-		
-		// Verifica CNPJ
-		if (dto.getTipoCliente ().equals (TipoCliente.PESSOA_JURIDICA.getCodigo ()) && !BR.isValidCNPJ (dto.getCpfOuCnpj ())) 
-		{
-			errors.add (new FieldMessage ("cpfOuCnpj", "CNPJ inválido!"));
-		}
-		
-		// Verifica EMAIL
-		Cliente cliente = repository.findByEmail (dto.getEmail ());
-		if (cliente != null)
-		{
-			errors.add (new FieldMessage ("email", "Email já existente"));
-		}
-		
-		for (FieldMessage error : errors)
-		{
-			context.disableDefaultConstraintViolation ();
-			context.buildConstraintViolationWithTemplate (error.getMessage ()).addPropertyNode(error.getFieldName ()).addConstraintViolation ();
-		}
-		
-		return errors.isEmpty ();
-	}
+    @Autowired
+    private ClienteRepository repository;
+
+    // ------------------------------------------------------------------------------------//
+    // IMPLEMENTADOS
+    
+    @Override
+    public void initialize (ClienteInsert ann) {}
+
+    @Override
+    public boolean isValid (ClienteNewDTO dto, ConstraintValidatorContext context)
+    {
+        List<FieldMessage> errors = new ArrayList<> ();
+
+        // Verifica CPF
+        if (dto.getTipoCliente ().equals (TipoCliente.PESSOA_FISICA.getCodigo ()) && !BR.isValidCPF (dto.getCpfOuCnpj ()))
+        {
+            errors.add (new FieldMessage ("cpfOuCnpj", "CPF inválido!"));
+        }
+
+        // Verifica CNPJ
+        if (dto.getTipoCliente ().equals (TipoCliente.PESSOA_JURIDICA.getCodigo ()) && !BR.isValidCNPJ (dto.getCpfOuCnpj ()))
+        {
+            errors.add (new FieldMessage ("cpfOuCnpj", "CNPJ inválido!"));
+        }
+
+        // Verifica EMAIL
+        Cliente cliente = repository.findByEmail (dto.getEmail ());
+        if (cliente != null)
+        {
+            errors.add (new FieldMessage ("email", "Email já existente"));
+        }
+
+        for (FieldMessage error : errors)
+        {
+            context.disableDefaultConstraintViolation ();
+            context.buildConstraintViolationWithTemplate (error.getMessage ()).addPropertyNode (error.getFieldName ()).addConstraintViolation ();
+        }
+
+        return errors.isEmpty ();
+    }
 }
