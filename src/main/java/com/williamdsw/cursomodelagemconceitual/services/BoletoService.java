@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class BoletoService
 {
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES AUXILIARES
+    
     // 1) Calendar = Classe para manipular datas
     public void preencherPagamentoComBoleto (PagamentoComBoleto boleto, Date instanteDoPedido)
     {
