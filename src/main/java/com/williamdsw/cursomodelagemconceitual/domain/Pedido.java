@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 @Entity
 public class Pedido implements Serializable
@@ -164,6 +167,31 @@ public class Pedido implements Serializable
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString ()
+    {
+        // Parametros de formato monetario
+        Locale locale = new Locale ("pt", "BR");
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance (locale);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss");
+        
+        StringBuilder builder = new StringBuilder ();
+        builder.append ("Pedido número: ");
+        builder.append (getId ());
+        builder.append (", Instante: ");
+        builder.append (simpleDateFormat.format (getInstante ()));
+        builder.append (", Cliente: ");
+        builder.append (getCliente ().getNome ());
+        builder.append (", Situação do Pagamento: ");
+        builder.append (getPagamento ().getEstadoPagamento ().getDescricao ());
+        builder.append ("\nDetalhes:\n");
+        itens.forEach (item -> builder.append (item.toString ()));
+        builder.append ("Valor total: ");
+        builder.append (numberFormat.format (getValorTotal ()));
+        
+        return builder.toString ();
     }
     
     // ------------------------------------------------------------------------------------//

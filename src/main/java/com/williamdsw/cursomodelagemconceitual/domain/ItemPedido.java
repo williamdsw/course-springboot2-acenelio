@@ -4,10 +4,13 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 @Entity
 public class ItemPedido implements Serializable
 {
+
     // ------------------------------------------------------------------------------------//
     // CAMPOS
 
@@ -144,6 +147,26 @@ public class ItemPedido implements Serializable
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public String toString ()
+    {
+        // Parametros de formato monetario
+        Locale locale = new Locale ("pt", "BR");
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance (locale);
+        
+        StringBuilder builder = new StringBuilder ();
+        builder.append (getProduto ().getNome ());
+        builder.append (", Quantidade: ");
+        builder.append (numberFormat.format (getQuantidade ()));
+        builder.append (", Preço Unitário: ");
+        builder.append (numberFormat.format (getPreco ()));
+        builder.append (", Subtotal: ");
+        builder.append (numberFormat.format (getSubtotal ()));
+        builder.append ("\n");
+        
+        return builder.toString ();
     }
     
     // ------------------------------------------------------------------------------------//

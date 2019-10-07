@@ -1,5 +1,6 @@
 package com.williamdsw.cursomodelagemconceitual.services;
 
+import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.domain.ItemPedido;
 import com.williamdsw.cursomodelagemconceitual.domain.PagamentoComBoleto;
 import java.util.Optional;
@@ -35,6 +36,9 @@ public class PedidoService
     
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+    
+    @Autowired
+    private ClienteService clienteService;
 
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
@@ -51,6 +55,11 @@ public class PedidoService
         // Dados e salvamento do Pedido e Pagamento
         pedido.setId (null);
         pedido.setInstante (new Date ());
+        
+        // Busca cliente
+        Cliente cliente = clienteService.findByID (pedido.getCliente ().getId ());
+        pedido.setCliente (cliente);
+        
         pedido.getPagamento ().setEstadoPagamento (EstadoPagamento.PENDENTE);
         pedido.getPagamento ().setPedido (pedido);
         
@@ -68,11 +77,13 @@ public class PedidoService
         {
             itemPedido.setDesconto (0.00);
             Produto produto = produtoService.findByID (itemPedido.getProduto ().getId ());
+            itemPedido.setProduto (produto);
             itemPedido.setPreco (produto.getPreco ());
             itemPedido.setPedido (pedido);
         }
         
         itemPedidoRepository.saveAll (pedido.getItens ());
+        System.out.println (pedido);
         
         return pedido;
     }
