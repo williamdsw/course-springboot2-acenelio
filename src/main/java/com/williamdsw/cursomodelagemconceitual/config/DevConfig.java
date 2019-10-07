@@ -1,6 +1,8 @@
 package com.williamdsw.cursomodelagemconceitual.config;
 
 import com.williamdsw.cursomodelagemconceitual.services.DatabaseService;
+import com.williamdsw.cursomodelagemconceitual.services.EmailService;
+import com.williamdsw.cursomodelagemconceitual.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -39,5 +41,11 @@ public class DevConfig
         
         databaseService.instantiateTestDatabase ();
         return true;
+    }
+    
+    @Bean
+    public EmailService emailService ()
+    {
+        return new SmtpEmailService ();
     }
 }
