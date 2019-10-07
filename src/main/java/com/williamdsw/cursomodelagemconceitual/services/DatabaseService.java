@@ -134,7 +134,7 @@ public class DatabaseService
 
         // ---------- CLIENTE -- ENDERECO ---------- //
         // Instancia com dados
-        Cliente mariaSilva = new Cliente (null, "Maria Silva", "reznorwill@gmail.com", "11111111111111", TipoCliente.PESSOA_FISICA);
+        Cliente mariaSilva = new Cliente (null, "Maria Silva", "mariasilva@gmail.com", "11111111111111", TipoCliente.PESSOA_FISICA);
         Endereco ruaFlores = new Endereco (null, "Rua Flores", "300", "Apto 303", "Jardim", "123456789", mariaSilva, uberlandia);
         Endereco avenidaMatos = new Endereco (null, "Avenida Matos", "105", "Sala 800", "Centro", "123456788", mariaSilva, saoPaulo);
 
