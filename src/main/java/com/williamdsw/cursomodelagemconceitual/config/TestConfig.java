@@ -1,6 +1,8 @@
 package com.williamdsw.cursomodelagemconceitual.config;
 
 import com.williamdsw.cursomodelagemconceitual.services.DatabaseService;
+import com.williamdsw.cursomodelagemconceitual.services.EmailService;
+import com.williamdsw.cursomodelagemconceitual.services.MockEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,5 +25,12 @@ public class TestConfig
     { 
         databaseService.instantiateTestDatabase ();
         return true;
+    }
+    
+    // @Bean permite disponibilizar um componente para ser usado
+    @Bean
+    public EmailService emailService ()
+    {
+        return new MockEmailService ();
     }
 }
