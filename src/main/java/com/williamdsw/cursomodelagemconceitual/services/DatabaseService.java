@@ -12,6 +12,7 @@ import com.williamdsw.cursomodelagemconceitual.domain.PagamentoComCartao;
 import com.williamdsw.cursomodelagemconceitual.domain.Pedido;
 import com.williamdsw.cursomodelagemconceitual.domain.Produto;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
+import com.williamdsw.cursomodelagemconceitual.domain.enums.Perfil;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.TipoCliente;
 import com.williamdsw.cursomodelagemconceitual.repositories.CategoriaRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.CidadeRepository;
@@ -138,17 +139,22 @@ public class DatabaseService
 
         // ---------- CLIENTE -- ENDERECO ---------- //
         // Instancia com dados
-        Cliente mariaSilva = new Cliente (null, "Maria Silva", "mariasilva@gmail.com", "11111111111111", TipoCliente.PESSOA_FISICA, passwordEncoder.encode ("123"));
+        Cliente mariaSilva = new Cliente (null, "Maria Silva", "mariasilva@gmail.com", "92176342470", TipoCliente.PESSOA_FISICA, passwordEncoder.encode ("123"));
+        Cliente anaCosta = new Cliente (null, "Ana Costa", "anacosta@gmail.com", "59252449663", TipoCliente.PESSOA_FISICA, passwordEncoder.encode ("123"));
         Endereco ruaFlores = new Endereco (null, "Rua Flores", "300", "Apto 303", "Jardim", "123456789", mariaSilva, uberlandia);
         Endereco avenidaMatos = new Endereco (null, "Avenida Matos", "105", "Sala 800", "Centro", "123456788", mariaSilva, saoPaulo);
+        Endereco avenidaFloriano = new Endereco (null, "Avenida Floriano", "2106", null, "Centro", "123456789", anaCosta, saoPaulo);
 
         // Passando referencias
         mariaSilva.getTelefones ().addAll (Arrays.asList ("11111111", "22222222"));
         mariaSilva.getEnderecos ().addAll (Arrays.asList (ruaFlores, avenidaMatos));
+        anaCosta.addPerfil (Perfil.ADMIN);
+        anaCosta.getTelefones ().addAll (Arrays.asList ("11111111", "22222222"));
+        anaCosta.getEnderecos ().addAll (Arrays.asList (avenidaFloriano));
 
         // Salvando
-        clienteRepository.saveAll (Arrays.asList (mariaSilva));
-        enderecoRepository.saveAll (Arrays.asList (ruaFlores, avenidaMatos));
+        clienteRepository.saveAll (Arrays.asList (mariaSilva, anaCosta));
+        enderecoRepository.saveAll (Arrays.asList (ruaFlores, avenidaMatos, avenidaFloriano));
 
         // ---------- PEDIDO -- PAGAMENTO ---------- //
         // Instancia com dados

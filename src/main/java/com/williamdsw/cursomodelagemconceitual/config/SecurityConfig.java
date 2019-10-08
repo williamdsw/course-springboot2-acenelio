@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     
     private static final String[] PUBLIC_MATCHERS_GET = 
     {
-        "/produtos/**", "/categorias/**"
+        "/produtos/**", "/categorias/**", "/clientes/**"
     };
     
     @Autowired

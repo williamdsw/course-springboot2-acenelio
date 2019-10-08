@@ -14,7 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.williamdsw.cursomodelagemconceitual.domain.enums.Perfil;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.TipoCliente;
+import java.util.stream.Collectors;
+import javax.persistence.FetchType;
 
 @Entity
 public class Cliente implements Serializable
@@ -43,6 +46,11 @@ public class Cliente implements Serializable
     @ElementCollection
     @CollectionTable(name = "telefone")
     private Set<String> telefones = new HashSet<> ();
+    
+    // FetchType.EAGER = Garante que esses valores serao buscados automaticamente
+    @ElementCollection (fetch = FetchType.EAGER)
+    @CollectionTable (name = "perfis")
+    private Set<Integer> perfis = new HashSet<> ();
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
@@ -53,6 +61,7 @@ public class Cliente implements Serializable
     
     public Cliente ()
     {
+        addPerfil (Perfil.CLIENTE);
     }
 
     public Cliente (Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente, String senha)
@@ -64,6 +73,7 @@ public class Cliente implements Serializable
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipoCliente = (tipoCliente == null ? null : tipoCliente.getCodigo ());
         this.senha = senha;
+        addPerfil (Perfil.CLIENTE);
     }
 
     // ------------------------------------------------------------------------------------//
@@ -147,6 +157,16 @@ public class Cliente implements Serializable
     public void setTelefones (Set<String> telefones)
     {
         this.telefones = telefones;
+    }
+    
+    public Set<Perfil> getPerfis ()
+    {
+        return perfis.stream ().map (codigo -> Perfil.toEnum (codigo)).collect (Collectors.toSet ());
+    }
+    
+    public void addPerfil (Perfil perfil)
+    {
+        perfis.add (perfil.getCodigo ());
     }
 
     public List<Pedido> getPedidos ()
