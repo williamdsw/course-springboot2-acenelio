@@ -19,6 +19,7 @@ import com.williamdsw.cursomodelagemconceitual.repositories.ClienteRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.EnderecoRepository;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class ClienteService
@@ -31,6 +32,9 @@ public class ClienteService
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
@@ -91,12 +95,12 @@ public class ClienteService
     // Converte dados
     public Cliente fromDTO (ClienteDTO dto)
     {
-        return new Cliente (dto.getId (), dto.getNome (), dto.getEmail (), null, null);
+        return new Cliente (dto.getId (), dto.getNome (), dto.getEmail (), null, null, null);
     }
 
     public Cliente fromDTO (ClienteNewDTO dto)
     {
-        Cliente cliente = new Cliente (null, dto.getNome (), dto.getEmail (), dto.getCpfOuCnpj (), TipoCliente.toEnum (dto.getTipoCliente ()));
+        Cliente cliente = new Cliente (null, dto.getNome (), dto.getEmail (), dto.getCpfOuCnpj (), TipoCliente.toEnum (dto.getTipoCliente ()), passwordEncoder.encode (dto.getSenha ()));
         Cidade cidade = new Cidade (dto.getCidadeID (), null, null);
         Endereco endereco = new Endereco (null, dto.getLogradouro (), dto.getNumero (), dto.getComplemento (), dto.getBairro (), dto.getCep (), cliente, cidade);
         cliente.getEnderecos ().add (endereco);

@@ -25,6 +25,7 @@ import com.williamdsw.cursomodelagemconceitual.repositories.ProdutoRepository;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -63,6 +64,9 @@ public class DatabaseService
 
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
@@ -134,7 +138,7 @@ public class DatabaseService
 
         // ---------- CLIENTE -- ENDERECO ---------- //
         // Instancia com dados
-        Cliente mariaSilva = new Cliente (null, "Maria Silva", "mariasilva@gmail.com", "11111111111111", TipoCliente.PESSOA_FISICA);
+        Cliente mariaSilva = new Cliente (null, "Maria Silva", "mariasilva@gmail.com", "11111111111111", TipoCliente.PESSOA_FISICA, passwordEncoder.encode ("123"));
         Endereco ruaFlores = new Endereco (null, "Rua Flores", "300", "Apto 303", "Jardim", "123456789", mariaSilva, uberlandia);
         Endereco avenidaMatos = new Endereco (null, "Avenida Matos", "105", "Sala 800", "Centro", "123456788", mariaSilva, saoPaulo);
 

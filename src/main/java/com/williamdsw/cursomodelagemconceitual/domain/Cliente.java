@@ -31,6 +31,9 @@ public class Cliente implements Serializable
     private String email;
     private String cpfOuCnpj;
     private Integer tipoCliente;
+    
+    @JsonIgnore
+    private String senha;
 
     // cascade = Define comportamento em cascata da operacao nos Enderecos
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -52,7 +55,7 @@ public class Cliente implements Serializable
     {
     }
 
-    public Cliente (Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente)
+    public Cliente (Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente, String senha)
     {
         super ();
         this.id = id;
@@ -60,6 +63,7 @@ public class Cliente implements Serializable
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipoCliente = (tipoCliente == null ? null : tipoCliente.getCodigo ());
+        this.senha = senha;
     }
 
     // ------------------------------------------------------------------------------------//
@@ -113,6 +117,16 @@ public class Cliente implements Serializable
     public void setTipoCliente (TipoCliente tipoCliente)
     {
         this.tipoCliente = tipoCliente.getCodigo ();
+    }
+
+    public String getSenha ()
+    {
+        return senha;
+    }
+
+    public void setSenha (String senha)
+    {
+        this.senha = senha;
     }
 
     public List<Endereco> getEnderecos ()
