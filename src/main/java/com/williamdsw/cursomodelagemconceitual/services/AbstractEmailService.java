@@ -73,7 +73,6 @@ public abstract class AbstractEmailService implements EmailService
         helper.setSubject ("Pedido confirmado! Código: " + pedido.getId ());
         helper.setSentDate (new Date (System.currentTimeMillis ()));
         helper.setText (htmlFromTemplatePedido (pedido), true);
-        System.out.println (htmlFromTemplatePedido (pedido));
         return message;
     }
     

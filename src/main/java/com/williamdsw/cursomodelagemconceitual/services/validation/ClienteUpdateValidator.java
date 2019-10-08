@@ -15,44 +15,44 @@ import com.williamdsw.cursomodelagemconceitual.resources.exceptions.FieldMessage
 
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO>
 {
-	// ------------------------------------------------------------------------------------//
-	// CAMPOS
-	
-	@Autowired
-	private ClienteRepository repository;
-	
-	@Autowired
-	private HttpServletRequest request;
-	
-	// ------------------------------------------------------------------------------------//
-	// IMPLEMENTADOS
-	
-	@Override
-	public void initialize (ClienteUpdate ann) { }
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
 
-	@Override
-	public boolean isValid (ClienteDTO dto, ConstraintValidatorContext context)
-	{
-		// Buscando atributos da URI
-		@SuppressWarnings ("unchecked")
-		Map<String, String> map = (Map<String, String>) request.getAttribute (HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-		Integer id = Integer.parseInt (map.get ("id"));
-		
-		List<FieldMessage> errors = new ArrayList<>();
-		
-		// Verifica EMAIL
-		Cliente cliente = repository.findByEmail (dto.getEmail ());
-		if (cliente != null && !cliente.getId ().equals (id))
-		{
-			errors.add (new FieldMessage ("email", "Email já existente"));
-		}
-		
-		for (FieldMessage error : errors)
-		{
-			context.disableDefaultConstraintViolation ();
-			context.buildConstraintViolationWithTemplate (error.getMessage ()).addPropertyNode(error.getFieldName ()).addConstraintViolation ();
-		}
-		
-		return errors.isEmpty ();
-	}
+    @Autowired
+    private ClienteRepository repository;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    // ------------------------------------------------------------------------------------//
+    // IMPLEMENTADOS
+    @Override
+    public void initialize (ClienteUpdate ann)
+    {}
+
+    @Override
+    public boolean isValid (ClienteDTO dto, ConstraintValidatorContext context)
+    {
+        // Buscando atributos da URI
+        @SuppressWarnings("unchecked")
+        Map<String, String> map = (Map<String, String>) request.getAttribute (HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        Integer id = Integer.parseInt (map.get ("id"));
+
+        List<FieldMessage> errors = new ArrayList<> ();
+
+        // Verifica EMAIL
+        Cliente cliente = repository.findByEmail (dto.getEmail ());
+        if (cliente != null && !cliente.getId ().equals (id))
+        {
+            errors.add (new FieldMessage ("email", "Email já existente"));
+        }
+
+        for (FieldMessage error : errors)
+        {
+            context.disableDefaultConstraintViolation ();
+            context.buildConstraintViolationWithTemplate (error.getMessage ()).addPropertyNode (error.getFieldName ()).addConstraintViolation ();
+        }
+
+        return errors.isEmpty ();
+    }
 }

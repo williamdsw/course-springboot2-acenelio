@@ -116,10 +116,7 @@ public class Produto implements Serializable
     public List<Pedido> getPedidos ()
     {
         List<Pedido> pedidos = new ArrayList<> ();
-        for (ItemPedido item : itens)
-        {
-            pedidos.add (item.getPedido ());
-        }
+        itens.forEach (item -> pedidos.add (item.getPedido ()));
 
         return pedidos;
     }

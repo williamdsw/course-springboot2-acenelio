@@ -13,14 +13,20 @@ import org.springframework.mail.javamail.JavaMailSender;
  */
 public class SmtpEmailService extends AbstractEmailService
 {
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
+    
+    private static final Logger LOG = LoggerFactory.getLogger (SmtpEmailService.class);
+    
     @Autowired
     private MailSender mailSender;
     
     @Autowired
     private JavaMailSender javaMailSender;
     
-    private static final Logger LOG = LoggerFactory.getLogger (SmtpEmailService.class);
-
+    // ------------------------------------------------------------------------------------//
+    // IMPLEMENTADOS
+    
     @Override
     public void sendEmail (SimpleMailMessage message)
     {

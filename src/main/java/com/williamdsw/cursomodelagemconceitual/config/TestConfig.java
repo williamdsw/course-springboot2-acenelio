@@ -17,8 +17,14 @@ import org.springframework.context.annotation.Profile;
 @Profile ("test")
 public class TestConfig
 {
+    // ------------------------------------------------------------------------------------//
+    // CAMPOS
+    
     @Autowired
     private DatabaseService databaseService;
+    
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES AUXILIARES
     
     @Bean
     public boolean instantiateDatabase () throws Exception

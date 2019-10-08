@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
  */
 public class UrlUtils
 {
+    // ------------------------------------------------------------------------------------//
+    // FUNCOES AUXILIARES
+    
     // Quebra uma String (exemplo: "1,2,3,4,5") para uma lista de Integers
     public static List<Integer> decodeIntegerList (String content)
     {

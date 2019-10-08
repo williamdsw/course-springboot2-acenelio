@@ -10,7 +10,6 @@ import java.util.Locale;
 @Entity
 public class ItemPedido implements Serializable
 {
-
     // ------------------------------------------------------------------------------------//
     // CAMPOS
 

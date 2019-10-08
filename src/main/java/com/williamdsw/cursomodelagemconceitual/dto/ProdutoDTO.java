@@ -1,4 +1,3 @@
-
 package com.williamdsw.cursomodelagemconceitual.dto;
 
 import com.williamdsw.cursomodelagemconceitual.domain.Produto;

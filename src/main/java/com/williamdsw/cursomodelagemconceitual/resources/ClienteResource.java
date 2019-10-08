@@ -72,7 +72,7 @@ public class ClienteResource
     {
         Cliente categoria = service.fromDTO (categoriaDTO);
         categoria.setId (id);
-        categoria = service.update (categoria);
+        service.update (categoria);
         return ResponseEntity.noContent ().build ();
     }
 
