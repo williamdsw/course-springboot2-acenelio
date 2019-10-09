@@ -1,8 +1,8 @@
 package com.williamdsw.cursomodelagemconceitual.config;
 
 import com.williamdsw.cursomodelagemconceitual.security.JWTAuthenticationFilter;
+import com.williamdsw.cursomodelagemconceitual.security.JWTAuthorizationFilter;
 import com.williamdsw.cursomodelagemconceitual.security.JWTUtil;
-import com.williamdsw.cursomodelagemconceitual.services.UserDetailsServiceImpl;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -71,6 +71,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         
         // Adiciona filtro de autenticacao
         http.addFilter (new JWTAuthenticationFilter (authenticationManager (), jwtUtil));
+        
+        // Adiciona filtro de autorizacao
+        http.addFilter (new JWTAuthorizationFilter (authenticationManager (), jwtUtil, userDetailsService));
+        
         http.sessionManagement ().sessionCreationPolicy (SessionCreationPolicy.STATELESS);
     }
     
