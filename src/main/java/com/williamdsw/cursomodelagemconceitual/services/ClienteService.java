@@ -12,11 +12,14 @@ import org.springframework.stereotype.Service;
 import com.williamdsw.cursomodelagemconceitual.domain.Cidade;
 import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.domain.Endereco;
+import com.williamdsw.cursomodelagemconceitual.domain.enums.Perfil;
 import com.williamdsw.cursomodelagemconceitual.domain.enums.TipoCliente;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteDTO;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteNewDTO;
 import com.williamdsw.cursomodelagemconceitual.repositories.ClienteRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.EnderecoRepository;
+import com.williamdsw.cursomodelagemconceitual.security.UserSS;
+import com.williamdsw.cursomodelagemconceitual.services.exceptions.AuthorizationException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,6 +51,12 @@ public class ClienteService
     // Busca por ID
     public Cliente findByID (Integer id)
     {
+        UserSS user = UserService.authenticated ();
+        if (user == null || !user.hasRole (Perfil.ADMIN) && !id.equals (user.getId ()))
+        {
+            throw new AuthorizationException ("Acesso negado");
+        }
+        
         Optional<Cliente> cliente = repository.findById (id);
         return cliente.orElseThrow (() -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Cliente.class.getName ()));
     }

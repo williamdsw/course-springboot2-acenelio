@@ -1,5 +1,6 @@
 package com.williamdsw.cursomodelagemconceitual.resources.exceptions;
 
+import com.williamdsw.cursomodelagemconceitual.services.exceptions.AuthorizationException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ public class ResourceExceptionHandler
     // FUNCOES AUXILIARES
 
     // @ExceptionHandler = Indica que e um tratador de excessoes de uma classe especifica
+    // Objeto nao encontrado
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objectNotFound (ObjectNotFoundException exception, HttpServletRequest request)
     {
@@ -23,6 +25,7 @@ public class ResourceExceptionHandler
         return ResponseEntity.status (HttpStatus.NOT_FOUND).body (error);
     }
 
+    // Erro na integridade dos dados
     @ExceptionHandler(DataIntegrityException.class)
     public ResponseEntity<StandardError> dataIntegrity (DataIntegrityException exception, HttpServletRequest request)
     {
@@ -30,6 +33,7 @@ public class ResourceExceptionHandler
         return ResponseEntity.status (HttpStatus.BAD_REQUEST).body (error);
     }
 
+    // Erro de validacao
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationError> validation (MethodArgumentNotValidException exception, HttpServletRequest request)
     {
@@ -41,5 +45,13 @@ public class ResourceExceptionHandler
         });
 
         return ResponseEntity.status (HttpStatus.BAD_REQUEST).body (error);
+    }
+    
+    // Erro de autorizacao
+    @ExceptionHandler (AuthorizationException.class)
+    public ResponseEntity<StandardError> authorization (AuthorizationException exception, HttpServletRequest request)
+    {
+        StandardError error = new StandardError (HttpStatus.FORBIDDEN.value (), exception.getMessage (), System.currentTimeMillis ());
+        return ResponseEntity.status (HttpStatus.FORBIDDEN).body (error);
     }
 }
