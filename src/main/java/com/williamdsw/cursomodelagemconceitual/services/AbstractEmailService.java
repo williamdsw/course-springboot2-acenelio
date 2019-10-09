@@ -1,5 +1,6 @@
 package com.williamdsw.cursomodelagemconceitual.services;
 
+import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.domain.Pedido;
 import java.util.Date;
 import javax.mail.MessagingException;
@@ -32,13 +33,15 @@ public abstract class AbstractEmailService implements EmailService
     // ------------------------------------------------------------------------------------//
     // IMPLEMENTADOS
     
+    // Envia email
     @Override
     public void sendOrderConfirmationEmail (Pedido pedido)
     {
         SimpleMailMessage message = prepareSimpleMailMessageFromPedido (pedido);
         sendEmail (message);
     }
-    
+
+    // Prepara dados do email
     protected SimpleMailMessage prepareSimpleMailMessageFromPedido (Pedido pedido)
     {
         SimpleMailMessage message = new SimpleMailMessage ();
@@ -50,6 +53,7 @@ public abstract class AbstractEmailService implements EmailService
         return message;
     }
     
+    // Envia email com HTML
     @Override
     public void sendOrderConfirmationHtmlEmail (Pedido pedido)
     {
@@ -64,6 +68,7 @@ public abstract class AbstractEmailService implements EmailService
         }
     }
     
+    // Prepara dados do email com HTML
     protected MimeMessage prepareMimeMessageFromPedido (Pedido pedido) throws MessagingException
     {
         MimeMessage message = javaMailSender.createMimeMessage ();
@@ -76,10 +81,31 @@ public abstract class AbstractEmailService implements EmailService
         return message;
     }
     
+    // Passa o objeto para a TemplateEngine
     protected String htmlFromTemplatePedido (Pedido pedido)
     {
         Context context = new Context ();
         context.setVariable ("pedido", pedido);
         return templateEngine.process ("email/ConfirmacaoPedido", context);
+    }
+    
+    // Envia email com nova senha
+    @Override
+    public void sendNewPasswordEmail (Cliente cliente, String newPassword)
+    {
+        SimpleMailMessage message = prepareNewPasswordEmail (cliente, newPassword);
+        sendEmail (message);
+    }
+
+    // Prepara dados do email com nova senha
+    protected SimpleMailMessage prepareNewPasswordEmail (Cliente cliente, String newPassword)
+    {
+        SimpleMailMessage message = new SimpleMailMessage ();
+        message.setTo (cliente.getEmail ());
+        message.setFrom (sender);
+        message.setSubject ("Solicitação de nova senha!");
+        message.setSentDate (new Date (System.currentTimeMillis ()));
+        message.setText ("Nova senha: ".concat (newPassword));        
+        return message;
     }
 }

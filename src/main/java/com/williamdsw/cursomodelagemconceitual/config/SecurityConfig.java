@@ -25,7 +25,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  * @author William
  */
 
-
 // 1) @EnableGlobalMethodSecurity = Habilita configuracao global de seguranca
 @Configuration
 @EnableWebSecurity
@@ -48,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     
     private static final String[] PUBLIC_MATCHERS_POST = 
     {
-        "/clientes/**"
+        "/clientes/**", "/auth/forgot/**"
     };
     
     @Autowired
