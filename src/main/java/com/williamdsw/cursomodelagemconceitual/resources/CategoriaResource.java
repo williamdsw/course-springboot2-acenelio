@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
 import com.williamdsw.cursomodelagemconceitual.dto.CategoriaDTO;
 import com.williamdsw.cursomodelagemconceitual.services.CategoriaService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 // Controlador REST que responde pelo endpoint "/categorias"
 @RestController
@@ -70,6 +71,8 @@ public class CategoriaResource
     // 3) Criando URI de resposta necessaria
     // 4) ResponseEntity.created (uri).build () = Cria URI de resposta '201' necessaria
     // 5) @Valid = Indica que o parametro sera validado antes de todas operacoes
+    // 6) @PreAuthorize ("hasAnyRole('ADMIN')") = Habilita esse endpoint apenas para administrador
+    @PreAuthorize ("hasAnyRole('ADMIN')")
     @RequestMapping (method = RequestMethod.POST)
     public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO categoriaDTO)
     {
@@ -82,6 +85,7 @@ public class CategoriaResource
     // 1) RequestMethod.PUT = Indica alteracao de dados
     // 2) No Update precisa combinar @RequestBody e @PathVariable
     // 3) ResponseEntity.noContent ().build () = Indica mensagem de 204 de sucesso mas sem conteudo de retorno
+    @PreAuthorize ("hasAnyRole('ADMIN')")
     @RequestMapping (value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update (@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id)
     {
@@ -92,6 +96,7 @@ public class CategoriaResource
     }
 
     // 1) RequestMethod.DELETE = Indica exclusao de dados
+    @PreAuthorize ("hasAnyRole('ADMIN')")
     @RequestMapping (value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteByID (@PathVariable Integer id)
     {

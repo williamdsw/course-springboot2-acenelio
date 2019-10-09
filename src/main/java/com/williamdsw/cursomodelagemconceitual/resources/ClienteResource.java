@@ -18,6 +18,7 @@ import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteDTO;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteNewDTO;
 import com.williamdsw.cursomodelagemconceitual.services.ClienteService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping (value = "/clientes")
@@ -31,6 +32,8 @@ public class ClienteResource
 
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
+    
+    @PreAuthorize ("hasAnyRole('ADMIN')")
     @RequestMapping (method = RequestMethod.GET)
     public ResponseEntity<List<ClienteDTO>> findAll ()
     {
@@ -39,6 +42,7 @@ public class ClienteResource
         return ResponseEntity.ok ().body (categoriasDTO);
     }
 
+    @PreAuthorize ("hasAnyRole('ADMIN')")
     @RequestMapping (value = "/page", method = RequestMethod.GET)
     public ResponseEntity<Page<ClienteDTO>> findPage (
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
@@ -77,6 +81,7 @@ public class ClienteResource
     }
 
     // 1) RequestMethod.DELETE = Indica exclusao de dados
+    @PreAuthorize ("hasAnyRole('ADMIN')")
     @RequestMapping (value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteByID (@PathVariable Integer id)
     {
