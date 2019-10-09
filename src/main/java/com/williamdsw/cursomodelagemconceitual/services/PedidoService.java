@@ -12,8 +12,13 @@ import com.williamdsw.cursomodelagemconceitual.domain.enums.EstadoPagamento;
 import com.williamdsw.cursomodelagemconceitual.repositories.ItemPedidoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.PagamentoRepository;
 import com.williamdsw.cursomodelagemconceitual.repositories.PedidoRepository;
+import com.williamdsw.cursomodelagemconceitual.security.UserSS;
+import com.williamdsw.cursomodelagemconceitual.services.exceptions.AuthorizationException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
 import java.util.Date;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -91,5 +96,18 @@ public class PedidoService
         //emailService.sendOrderConfirmationHtmlEmail (pedido);
         
         return pedido;
+    }
+    
+    public Page<Pedido> findPage (Integer pageNumber, Integer linesPerPage, String orderBy, String direction)
+    {
+        UserSS user = UserService.authenticated ();
+        if (user == null)
+        {
+            throw new AuthorizationException ("Acesso negado");
+        }
+        
+        PageRequest pageRequest = PageRequest.of (pageNumber, linesPerPage, Direction.valueOf (direction), orderBy);
+        Cliente cliente = clienteService.findByID (user.getId ());
+        return repository.findByCliente (cliente, pageRequest);
     }
 }

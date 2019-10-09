@@ -10,7 +10,9 @@ import com.williamdsw.cursomodelagemconceitual.domain.Pedido;
 import com.williamdsw.cursomodelagemconceitual.services.PedidoService;
 import java.net.URI;
 import javax.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
@@ -25,6 +27,17 @@ public class PedidoResource
 
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
+    
+    @RequestMapping (method = RequestMethod.GET)
+    public ResponseEntity<Page<Pedido>> findPage (
+            @RequestParam (value = "page", defaultValue = "0") Integer pageNumber,
+            @RequestParam (value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam (value = "orderBy", defaultValue = "instante") String orderBy,
+            @RequestParam (value = "direction", defaultValue = "DESC") String direction)
+    {
+        Page<Pedido> pedidos = service.findPage (pageNumber, linesPerPage, orderBy, direction);
+        return ResponseEntity.ok ().body (pedidos);
+    }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Pedido> findByID (@PathVariable Integer id)
