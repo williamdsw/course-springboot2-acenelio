@@ -1,5 +1,8 @@
 package com.williamdsw.cursomodelagemconceitual.resources.exceptions;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.AuthorizationException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
+import com.williamdsw.cursomodelagemconceitual.services.exceptions.FileException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
@@ -53,5 +57,38 @@ public class ResourceExceptionHandler
     {
         StandardError error = new StandardError (HttpStatus.FORBIDDEN.value (), exception.getMessage (), System.currentTimeMillis ());
         return ResponseEntity.status (HttpStatus.FORBIDDEN).body (error);
+    }
+    
+    // Erro na criacao de arquivo
+    @ExceptionHandler (FileException.class)
+    public ResponseEntity<StandardError> file (FileException exception, HttpServletRequest request)
+    {
+        StandardError error = new StandardError (HttpStatus.BAD_REQUEST.value (), exception.getMessage (), System.currentTimeMillis ());
+        return ResponseEntity.status (HttpStatus.BAD_REQUEST).body (error);
+    }
+    
+    // Erro a se conectar com servico da Amazon
+    @ExceptionHandler (AmazonServiceException.class)
+    public ResponseEntity<StandardError> amazonService (AmazonServiceException exception, HttpServletRequest request)
+    {
+        HttpStatus status = HttpStatus.valueOf (exception.getErrorCode ());
+        StandardError error = new StandardError (status.value (), exception.getMessage (), System.currentTimeMillis ());
+        return ResponseEntity.status (status).body (error);
+    }
+    
+    // Erro ao utilizar o cliente da Amazon
+    @ExceptionHandler (AmazonClientException.class)
+    public ResponseEntity<StandardError> amazonClient (AmazonClientException exception, HttpServletRequest request)
+    {
+        StandardError error = new StandardError (HttpStatus.BAD_REQUEST.value (), exception.getMessage (), System.currentTimeMillis ());
+        return ResponseEntity.status (HttpStatus.BAD_REQUEST).body (error);
+    }
+    
+    // Erro ao utilizar o S3 da Amazon
+    @ExceptionHandler (AmazonS3Exception.class)
+    public ResponseEntity<StandardError> amazonS3 (AmazonS3Exception exception, HttpServletRequest request)
+    {
+        StandardError error = new StandardError (HttpStatus.BAD_REQUEST.value (), exception.getMessage (), System.currentTimeMillis ());
+        return ResponseEntity.status (HttpStatus.BAD_REQUEST).body (error);
     }
 }

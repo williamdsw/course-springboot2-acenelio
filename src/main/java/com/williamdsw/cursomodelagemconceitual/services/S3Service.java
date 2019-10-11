@@ -2,6 +2,7 @@ package com.williamdsw.cursomodelagemconceitual.services;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.williamdsw.cursomodelagemconceitual.services.exceptions.FileException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -47,7 +48,7 @@ public class S3Service
         }
         catch (IOException ex)
         {
-            throw new RuntimeException ("Erro de IO: ".concat (ex.getMessage ()));
+            throw new FileException ("Erro de IO: ".concat (ex.getMessage ()));
         }
     }
     
@@ -64,7 +65,7 @@ public class S3Service
         }
         catch (URISyntaxException ex)
         {
-            throw new RuntimeException ("Erro ao converter URL para URI");
+            throw new FileException ("Erro ao converter URL para URI");
         }
     }
 }
