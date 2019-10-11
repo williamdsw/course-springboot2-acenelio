@@ -140,6 +140,19 @@ public class ClienteService
     // Grava um arquivo e retorna a URI do mesmo
     public URI uploadProfilePicture (MultipartFile multipartFile)
     {
-        return s3service.uploadFile (multipartFile);
+        // Verificando usuario
+        UserSS user = UserService.authenticated ();
+        if (user == null)
+        {
+            throw new AuthorizationException ("Acesso negado!");
+        }
+        
+        // Salva cliente
+        URI uri = s3service.uploadFile (multipartFile);
+        Cliente cliente = repository.getOne (user.getId ());
+        cliente.setImageURL (uri.toString ());
+        repository.save (cliente);
+        
+        return uri;
     }
 }
