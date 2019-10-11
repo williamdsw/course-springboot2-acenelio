@@ -19,6 +19,7 @@ import com.williamdsw.cursomodelagemconceitual.dto.ClienteDTO;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteNewDTO;
 import com.williamdsw.cursomodelagemconceitual.services.ClienteService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping (value = "/clientes")
@@ -87,5 +88,12 @@ public class ClienteResource
     {
         service.deleteByID (id);
         return ResponseEntity.noContent ().build ();
+    }
+    
+    @RequestMapping (value = "/picture", method = RequestMethod.POST)
+    public ResponseEntity<Void> uploadProfilePicture (@RequestParam (name = "file") MultipartFile multipartFile)
+    {
+        URI uri = service.uploadProfilePicture (multipartFile);
+        return ResponseEntity.created (uri).build ();
     }
 }

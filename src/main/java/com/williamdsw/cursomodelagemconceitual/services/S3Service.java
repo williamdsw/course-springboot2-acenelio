@@ -1,15 +1,17 @@
 package com.williamdsw.cursomodelagemconceitual.services;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import java.io.File;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author William
@@ -32,24 +34,37 @@ public class S3Service
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
     
-    public void uploadFile (String localFilePath)
+    public URI uploadFile (MultipartFile multipartFile)
     {
         try
         {
-            File file = new File (localFilePath);
-            LOG.info ("Iniciando Upload...");
-            PutObjectRequest objectRequest = new PutObjectRequest (bucketName, "teste.jpg", file);
-            s3client.putObject (objectRequest);
-            LOG.info ("Upload finalizado");
+            // Informacoes iniciais do arquivo
+            String fileName = multipartFile.getOriginalFilename ();
+            InputStream inputStream;
+            inputStream = multipartFile.getInputStream ();
+            String contentType = multipartFile.getContentType ();
+            return uploadFile (inputStream, fileName, contentType);
         }
-        catch (AmazonServiceException exception)
+        catch (IOException ex)
         {
-            LOG.info ("AmazonServiceException: " + exception.getErrorMessage ());
-            LOG.info ("Status Code: " + exception.getErrorCode ());
+            throw new RuntimeException ("Erro de IO: ".concat (ex.getMessage ()));
         }
-        catch (AmazonClientException exception)
+    }
+    
+    public URI uploadFile (InputStream inputStream, String fileName, String contentType)
+    {
+        try
         {
-            LOG.info ("AmazonServiceException: " + exception.getMessage ());
+            ObjectMetadata metadata = new ObjectMetadata ();
+            metadata.setContentType (contentType);
+            LOG.info ("Iniciando upload...");
+            s3client.putObject (bucketName, fileName, inputStream, metadata);
+            LOG.info ("Upload finalizado!");
+            return s3client.getUrl (bucketName, fileName).toURI ();
+        }
+        catch (URISyntaxException ex)
+        {
+            throw new RuntimeException ("Erro ao converter URL para URI");
         }
     }
 }

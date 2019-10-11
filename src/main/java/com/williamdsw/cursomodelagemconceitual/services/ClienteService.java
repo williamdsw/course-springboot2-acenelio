@@ -22,7 +22,9 @@ import com.williamdsw.cursomodelagemconceitual.security.UserSS;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.AuthorizationException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
+import java.net.URI;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ClienteService
@@ -38,6 +40,9 @@ public class ClienteService
     
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private S3Service s3service;
 
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
@@ -130,5 +135,11 @@ public class ClienteService
     {
         novoCliente.setNome (cliente.getNome ());
         novoCliente.setEmail (cliente.getEmail ());
+    }
+    
+    // Grava um arquivo e retorna a URI do mesmo
+    public URI uploadProfilePicture (MultipartFile multipartFile)
+    {
+        return s3service.uploadFile (multipartFile);
     }
 }
