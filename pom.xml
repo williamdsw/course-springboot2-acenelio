@@ -77,6 +77,20 @@
             <artifactId>jjwt</artifactId>
             <version>0.7.0</version>
         </dependency>
+        
+        <!-- Dependencia para AWS Amazon -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        
+        <!-- Dependencia para manipular extensao dos arquivos -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>LATEST</version>
+        </dependency>
     </dependencies>
 
     <build>
