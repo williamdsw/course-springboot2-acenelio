@@ -22,7 +22,9 @@ import com.williamdsw.cursomodelagemconceitual.security.UserSS;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.AuthorizationException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.DataIntegrityException;
 import com.williamdsw.cursomodelagemconceitual.services.exceptions.ObjectNotFoundException;
+import java.awt.image.BufferedImage;
 import java.net.URI;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +45,12 @@ public class ClienteService
     
     @Autowired
     private S3Service s3service;
+    
+    @Autowired
+    private ImageService imageService;
+    
+    @Value ("${img.prefix.client.profile}")
+    private String prefix;
 
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
@@ -147,12 +155,9 @@ public class ClienteService
             throw new AuthorizationException ("Acesso negado!");
         }
         
-        // Salva cliente
-        URI uri = s3service.uploadFile (multipartFile);
-        Cliente cliente = repository.getOne (user.getId ());
-        cliente.setImageURL (uri.toString ());
-        repository.save (cliente);
-        
-        return uri;
+        // Aplica tratamento na imagem e sobe para Amazon
+        BufferedImage jpg = imageService.getJPGImageFromFile (multipartFile);
+        String fileName = prefix + user.getId () + ".jpg";
+        return s3service.uploadFile (imageService.getInputStream (jpg, "jpg"), fileName, "image");
     }
 }
