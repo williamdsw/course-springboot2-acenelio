@@ -51,6 +51,9 @@ public class ClienteService
     
     @Value ("${img.prefix.client.profile}")
     private String prefix;
+    
+    @Value ("${img.profile.size}")
+    private Integer imageSize;
 
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
@@ -157,6 +160,8 @@ public class ClienteService
         
         // Aplica tratamento na imagem e sobe para Amazon
         BufferedImage jpg = imageService.getJPGImageFromFile (multipartFile);
+        jpg = imageService.cropSquare (jpg);
+        jpg = imageService.resize (jpg, imageSize);
         String fileName = prefix + user.getId () + ".jpg";
         return s3service.uploadFile (imageService.getInputStream (jpg, "jpg"), fileName, "image");
     }
