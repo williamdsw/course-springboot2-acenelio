@@ -9,16 +9,16 @@ public class ValidationError extends StandardError
     // CAMPOS
 
     private static final long serialVersionUID = 1L;
-    private List<FieldMessage> errors = new ArrayList<> ();
+    private final List<FieldMessage> errors = new ArrayList<> ();
 
     // ------------------------------------------------------------------------------------//
     // CONSTRUTORES
-    
-    public ValidationError (Integer status, String message, Long timestamp)
-    {
-        super (status, message, timestamp);
-    }
 
+    public ValidationError (Long timestamp, Integer status, String error, String message, String path)
+    {
+        super (timestamp, status, error, message, path);
+    }
+    
     // ------------------------------------------------------------------------------------//
     // GETTERS
     

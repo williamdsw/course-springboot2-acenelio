@@ -8,24 +8,38 @@ public class StandardError implements Serializable
     // CAMPOS
 
     private static final long serialVersionUID = 1L;
-    private Integer status;
-    private String message;
     private Long timestamp;
+    private Integer status;
+    private String error;
+    private String message;
+    private String path;
 
     // ------------------------------------------------------------------------------------//
     // CONSTRUTOR
-    
-    public StandardError (Integer status, String message, Long timestamp)
+
+    public StandardError (Long timestamp, Integer status, String error, String message, String path)
     {
         super ();
-        this.status = status;
-        this.message = message;
         this.timestamp = timestamp;
+        this.status = status;
+        this.error = error;
+        this.message = message;
+        this.path = path;
     }
 
     // ------------------------------------------------------------------------------------//
     // GETTERS / SETTERS
-    
+
+    public Long getTimestamp ()
+    {
+        return timestamp;
+    }
+
+    public void setTimestamp (Long timestamp)
+    {
+        this.timestamp = timestamp;
+    }
+
     public Integer getStatus ()
     {
         return status;
@@ -34,6 +48,16 @@ public class StandardError implements Serializable
     public void setStatus (Integer status)
     {
         this.status = status;
+    }
+
+    public String getError ()
+    {
+        return error;
+    }
+
+    public void setError (String error)
+    {
+        this.error = error;
     }
 
     public String getMessage ()
@@ -46,13 +70,13 @@ public class StandardError implements Serializable
         this.message = message;
     }
 
-    public Long getTimestamp ()
+    public String getPath ()
     {
-        return timestamp;
+        return path;
     }
 
-    public void setTimestamp (Long timestamp)
+    public void setPath (String path)
     {
-        this.timestamp = timestamp;
+        this.path = path;
     }
 }
