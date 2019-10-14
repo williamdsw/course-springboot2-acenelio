@@ -95,9 +95,52 @@ public class DatabaseService
         Produto abajour = new Produto (null, "Abajour", 100.00);
         Produto pendente = new Produto (null, "Pendente", 180.00);
         Produto shampoo = new Produto (null, "Shampoo", 90.00);
+        Produto p12 = new Produto(null, "Produto 12", 10.00);
+        Produto p13 = new Produto (null, "Produto 13", 10.00);
+        Produto p14 = new Produto (null, "Produto 14", 10.00);
+        Produto p15 = new Produto (null, "Produto 15", 10.00);
+        Produto p16 = new Produto (null, "Produto 16", 10.00);
+        Produto p17 = new Produto (null, "Produto 17", 10.00);
+        Produto p18 = new Produto (null, "Produto 18", 10.00);
+        Produto p19 = new Produto (null, "Produto 19", 10.00);
+        Produto p20 = new Produto (null, "Produto 20", 10.00);
+        Produto p21 = new Produto (null, "Produto 21", 10.00);
+        Produto p22 = new Produto (null, "Produto 22", 10.00);
+        Produto p23 = new Produto (null, "Produto 23", 10.00);
+        Produto p24 = new Produto (null, "Produto 24", 10.00);
+        Produto p25 = new Produto (null, "Produto 25", 10.00);
+        Produto p26 = new Produto (null, "Produto 26", 10.00);
+        Produto p27 = new Produto (null, "Produto 27", 10.00);
+        Produto p28 = new Produto (null, "Produto 28", 10.00);
+        Produto p29 = new Produto (null, "Produto 29", 10.00);
+        Produto p30 = new Produto (null, "Produto 30", 10.00);
+        Produto p31 = new Produto (null, "Produto 31", 10.00);
+        Produto p32 = new Produto (null, "Produto 32", 10.00);
+        Produto p33 = new Produto (null, "Produto 33", 10.00);
+        Produto p34 = new Produto (null, "Produto 34", 10.00);
+        Produto p35 = new Produto (null, "Produto 35", 10.00);
+        Produto p36 = new Produto (null, "Produto 36", 10.00);
+        Produto p37 = new Produto (null, "Produto 37", 10.00);
+        Produto p38 = new Produto (null, "Produto 38", 10.00);
+        Produto p39 = new Produto (null, "Produto 39", 10.00);
+        Produto p40 = new Produto (null, "Produto 40", 10.00);
+        Produto p41 = new Produto (null, "Produto 41", 10.00);
+        Produto p42 = new Produto (null, "Produto 42", 10.00);
+        Produto p43 = new Produto (null, "Produto 43", 10.00);
+        Produto p44 = new Produto (null, "Produto 44", 10.00);
+        Produto p45 = new Produto (null, "Produto 45", 10.00);
+        Produto p46 = new Produto (null, "Produto 46", 10.00);
+        Produto p47 = new Produto (null, "Produto 47", 10.00);
+        Produto p48 = new Produto (null, "Produto 48", 10.00);
+        Produto p49 = new Produto (null, "Produto 49", 10.00);
+        Produto p50 = new Produto (null, "Produto 50", 10.00);
 
         // Passando referencias
         informatica.getProdutos ().addAll (Arrays.asList (computador, impressora, mouse));
+        informatica.getProdutos ().addAll (Arrays.asList (p12, p13, p14, p15, p16, p17, p18, p19, p20,
+                p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p34, p35, p36, p37, p38,
+                p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
+
         escritorio.getProdutos ().addAll (Arrays.asList (impressora, mesaDeEscritorio));
         camaMesaBanho.getProdutos ().addAll (Arrays.asList (toalha, colcha));
         eletronicos.getProdutos ().addAll (Arrays.asList (computador, impressora, mouse, tvTrueColor));
@@ -116,10 +159,52 @@ public class DatabaseService
         abajour.getCategorias ().addAll (Arrays.asList (decoracao));
         pendente.getCategorias ().addAll (Arrays.asList (decoracao));
         shampoo.getCategorias ().addAll (Arrays.asList (perfumaria));
+        p12.getCategorias ().addAll (Arrays.asList (informatica));
+        p13.getCategorias ().addAll (Arrays.asList (informatica));
+        p14.getCategorias ().addAll (Arrays.asList (informatica));
+        p15.getCategorias ().addAll (Arrays.asList (informatica));
+        p16.getCategorias ().addAll (Arrays.asList (informatica));
+        p17.getCategorias ().addAll (Arrays.asList (informatica));
+        p18.getCategorias ().addAll (Arrays.asList (informatica));
+        p19.getCategorias ().addAll (Arrays.asList (informatica));
+        p20.getCategorias ().addAll (Arrays.asList (informatica));
+        p21.getCategorias ().addAll (Arrays.asList (informatica));
+        p22.getCategorias ().addAll (Arrays.asList (informatica));
+        p23.getCategorias ().addAll (Arrays.asList (informatica));
+        p24.getCategorias ().addAll (Arrays.asList (informatica));
+        p25.getCategorias ().addAll (Arrays.asList (informatica));
+        p26.getCategorias ().addAll (Arrays.asList (informatica));
+        p27.getCategorias ().addAll (Arrays.asList (informatica));
+        p28.getCategorias ().addAll (Arrays.asList (informatica));
+        p29.getCategorias ().addAll (Arrays.asList (informatica));
+        p30.getCategorias ().addAll (Arrays.asList (informatica));
+        p31.getCategorias ().addAll (Arrays.asList (informatica));
+        p32.getCategorias ().addAll (Arrays.asList (informatica));
+        p33.getCategorias ().addAll (Arrays.asList (informatica));
+        p34.getCategorias ().addAll (Arrays.asList (informatica));
+        p35.getCategorias ().addAll (Arrays.asList (informatica));
+        p36.getCategorias ().addAll (Arrays.asList (informatica));
+        p37.getCategorias ().addAll (Arrays.asList (informatica));
+        p38.getCategorias ().addAll (Arrays.asList (informatica));
+        p39.getCategorias ().addAll (Arrays.asList (informatica));
+        p40.getCategorias ().addAll (Arrays.asList (informatica));
+        p41.getCategorias ().addAll (Arrays.asList (informatica));
+        p42.getCategorias ().addAll (Arrays.asList (informatica));
+        p43.getCategorias ().addAll (Arrays.asList (informatica));
+        p44.getCategorias ().addAll (Arrays.asList (informatica));
+        p45.getCategorias ().addAll (Arrays.asList (informatica));
+        p46.getCategorias ().addAll (Arrays.asList (informatica));
+        p47.getCategorias ().addAll (Arrays.asList (informatica));
+        p48.getCategorias ().addAll (Arrays.asList (informatica));
+        p49.getCategorias ().addAll (Arrays.asList (informatica));
+        p50.getCategorias ().addAll (Arrays.asList (informatica));
 
         // Salvando
         categoriaRepository.saveAll (Arrays.asList (informatica, escritorio, camaMesaBanho, eletronicos, jardinagem, decoracao, perfumaria));
         produtoRepository.saveAll (Arrays.asList (computador, impressora, mouse, mesaDeEscritorio, toalha, colcha, tvTrueColor, rocadeira, abajour, pendente, shampoo));
+        produtoRepository.saveAll (Arrays.asList (p12, p13, p14, p15, p16, p17, p18, p19, p20,
+                p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p34, p35, p36, p37, p38,
+                p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
 
         // ---------- ESTADO -- CIDADE ---------- //
         // Instancias com dados
