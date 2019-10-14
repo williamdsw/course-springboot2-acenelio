@@ -76,6 +76,25 @@ public class ClienteService
         Optional<Cliente> cliente = repository.findById (id);
         return cliente.orElseThrow (() -> new ObjectNotFoundException (" Objeto não encontrado! " + " Id: " + id + " Tipo: " + Cliente.class.getName ()));
     }
+    
+    // Busca por email
+    public Cliente findByEmail (String email)
+    {
+        UserSS user = UserService.authenticated ();
+        if (user == null || !user.hasRole (Perfil.ADMIN) && !email.equals (user.getUsername ()))
+        {
+            throw new AuthorizationException ("Acesso negado");
+        }
+        
+        // Busca a e verificacao
+        Cliente cliente = repository.findByEmail (email);
+        if (cliente == null)
+        {
+            throw new ObjectNotFoundException (" Objeto não encontrado! Id: " + user.getId () + " Tipo: " + Cliente.class.getName ());
+        }
+        
+        return cliente;
+    }
 
     // Busca com paginacao
     public Page<Cliente> findPage (Integer pageNumber, Integer linesPerPage, String orderBy, String direction)
