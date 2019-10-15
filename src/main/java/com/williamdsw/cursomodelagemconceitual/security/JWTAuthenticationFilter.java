@@ -51,7 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Authentication authentication = authenticationManager.authenticate (authToken);
             return authentication;
         }
-        catch (IOException | AuthenticationException exception)
+        catch (IOException exception)
         {
             throw new RuntimeException (exception);
         }
@@ -72,6 +72,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         @Override
         public void onAuthenticationFailure (HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException
         {
+            System.out.println ("está no error");
             response.setStatus (401);
             response.setContentType ("application/json");
             response.getWriter ().append (json ());
@@ -84,9 +85,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             builder.append ("{\"timestamp\":");
             builder.append (date);
             builder.append (", \"status\": 401, ");
-            builder.append (", \"error\": \"Não autorizado\", ");
-            builder.append (", \"message\": \"Email ou senha inválidos\", ");
-            builder.append (", \"path\": \"/login\"} ");
+            builder.append ("\"error\": \"Não autorizado\", ");
+            builder.append ("\"message\": \"Email ou senha inválidos\", ");
+            builder.append ("\"path\": \"/login\"} ");
             return builder.toString ();
         }
     }
