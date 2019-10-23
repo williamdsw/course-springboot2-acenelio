@@ -47,7 +47,10 @@ public class ClienteNewDTO implements Serializable
     private String cep;
 
     // TELEFONE
-    private List<String> telefones = new ArrayList<> ();
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    private String telefone1;
+    private String telefone2;
+    private String telefone3;
 
     // CIDADE
     private Integer cidadeID;
@@ -55,9 +58,7 @@ public class ClienteNewDTO implements Serializable
     // ------------------------------------------------------------------------------------//
     // CONSTRUTORES
     
-    public ClienteNewDTO ()
-    {
-    }
+    public ClienteNewDTO () {}
 
     // ------------------------------------------------------------------------------------//
     // GETTERS / SETTERS
@@ -162,14 +163,34 @@ public class ClienteNewDTO implements Serializable
         this.cep = cep;
     }
 
-    public List<String> getTelefones ()
+    public String getTelefone1 ()
     {
-        return telefones;
+        return telefone1;
     }
 
-    public void setTelefones (List<String> telefones)
+    public void setTelefone1 (String telefone1)
     {
-        this.telefones = telefones;
+        this.telefone1 = telefone1;
+    }
+
+    public String getTelefone2 ()
+    {
+        return telefone2;
+    }
+
+    public void setTelefone2 (String telefone2)
+    {
+        this.telefone2 = telefone2;
+    }
+
+    public String getTelefone3 ()
+    {
+        return telefone3;
+    }
+
+    public void setTelefone3 (String telefone3)
+    {
+        this.telefone3 = telefone3;
     }
 
     public Integer getCidadeID ()

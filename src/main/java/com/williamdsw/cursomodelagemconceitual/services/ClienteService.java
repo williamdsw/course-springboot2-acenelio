@@ -148,14 +148,17 @@ public class ClienteService
         Cidade cidade = new Cidade (dto.getCidadeID (), null, null);
         Endereco endereco = new Endereco (null, dto.getLogradouro (), dto.getNumero (), dto.getComplemento (), dto.getBairro (), dto.getCep (), cliente, cidade);
         cliente.getEnderecos ().add (endereco);
-
-        dto.getTelefones ().forEach (telefone ->
+        cliente.getTelefones ().add (dto.getTelefone1 ());
+        
+        if (dto.getTelefone2 () != null)
         {
-            if (telefone != null)
-            {
-                cliente.getTelefones ().add (telefone);
-            }
-        });
+            cliente.getTelefones ().add (dto.getTelefone2 ());
+        }
+        
+        if (dto.getTelefone3 () != null)
+        {
+            cliente.getTelefones ().add (dto.getTelefone3 ());
+        }
 
         return cliente;
     }
