@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.williamdsw.cursomodelagemconceitual.domain.Pedido;
 import com.williamdsw.cursomodelagemconceitual.services.PedidoService;
+
+import io.swagger.annotations.ApiOperation;
+
 import java.net.URI;
 import javax.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -28,6 +31,7 @@ public class PedidoResource
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
     
+    @ApiOperation (value = "Lista Pedidos com Paginação")
     @RequestMapping (method = RequestMethod.GET)
     public ResponseEntity<Page<Pedido>> findPage (
             @RequestParam (value = "page", defaultValue = "0") Integer pageNumber,
@@ -39,6 +43,7 @@ public class PedidoResource
         return ResponseEntity.ok ().body (pedidos);
     }
     
+    @ApiOperation (value = "Encontra Pedido pelo ID")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Pedido> findByID (@PathVariable Integer id)
     {
@@ -46,6 +51,7 @@ public class PedidoResource
         return ResponseEntity.ok ().body (pedido);
     }
     
+    @ApiOperation (value = "Insere Pedido")
     @RequestMapping (method = RequestMethod.POST)
     public ResponseEntity<Void> insert (@Valid @RequestBody Pedido pedido)
     {

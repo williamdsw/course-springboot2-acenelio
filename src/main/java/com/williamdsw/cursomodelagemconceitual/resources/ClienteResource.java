@@ -18,6 +18,9 @@ import com.williamdsw.cursomodelagemconceitual.domain.Cliente;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteDTO;
 import com.williamdsw.cursomodelagemconceitual.dto.ClienteNewDTO;
 import com.williamdsw.cursomodelagemconceitual.services.ClienteService;
+
+import io.swagger.annotations.ApiOperation;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +38,7 @@ public class ClienteResource
     // FUNCOES AUXILIARES
     
     @PreAuthorize ("hasAnyRole('ADMIN')")
+    @ApiOperation (value = "Lista todos Clientes")
     @RequestMapping (method = RequestMethod.GET)
     public ResponseEntity<List<ClienteDTO>> findAll ()
     {
@@ -44,6 +48,7 @@ public class ClienteResource
     }
 
     @PreAuthorize ("hasAnyRole('ADMIN')")
+    @ApiOperation (value = "Lista todos Clientes com paginação")
     @RequestMapping (value = "/page", method = RequestMethod.GET)
     public ResponseEntity<Page<ClienteDTO>> findPage (
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
@@ -56,6 +61,7 @@ public class ClienteResource
         return ResponseEntity.ok ().body (categoriasDTO);
     }
 
+    @ApiOperation (value = "Encontra Cliente por ID")
     @RequestMapping (value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Cliente> findByID (@PathVariable Integer id)
     {
@@ -63,6 +69,7 @@ public class ClienteResource
         return ResponseEntity.ok ().body (cliente);
     }
     
+    @ApiOperation (value = "Encontra Cliente por email")
     @RequestMapping (value = "/email", method = RequestMethod.GET)
     public ResponseEntity<Cliente> findByEmail (@RequestParam (value = "value") String email)
     {
@@ -70,6 +77,7 @@ public class ClienteResource
         return ResponseEntity.ok ().body (cliente);
     }
 
+    @ApiOperation (value = "Insere Cliente")
     @RequestMapping (method = RequestMethod.POST)
     public ResponseEntity<Void> insert (@Valid @RequestBody ClienteNewDTO clienteNewDTO)
     {
@@ -79,6 +87,7 @@ public class ClienteResource
         return ResponseEntity.created (uri).build ();
     }
 
+    @ApiOperation (value = "Atualiza Cliente")
     @RequestMapping (value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update (@Valid @RequestBody ClienteDTO categoriaDTO, @PathVariable Integer id)
     {
@@ -90,6 +99,7 @@ public class ClienteResource
 
     // 1) RequestMethod.DELETE = Indica exclusao de dados
     @PreAuthorize ("hasAnyRole('ADMIN')")
+    @ApiOperation (value = "Exclui Cliente")
     @RequestMapping (value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteByID (@PathVariable Integer id)
     {
@@ -97,6 +107,7 @@ public class ClienteResource
         return ResponseEntity.noContent ().build ();
     }
     
+    @ApiOperation (value = "Atualiza imagem de perfil")
     @RequestMapping (value = "/picture", method = RequestMethod.POST)
     public ResponseEntity<Void> uploadProfilePicture (@RequestParam (name = "file") MultipartFile multipartFile)
     {

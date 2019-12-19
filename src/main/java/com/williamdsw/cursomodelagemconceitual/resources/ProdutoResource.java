@@ -4,6 +4,9 @@ import com.williamdsw.cursomodelagemconceitual.domain.Produto;
 import com.williamdsw.cursomodelagemconceitual.dto.ProdutoDTO;
 import com.williamdsw.cursomodelagemconceitual.resources.utils.UrlUtils;
 import com.williamdsw.cursomodelagemconceitual.services.ProdutoService;
+
+import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +33,7 @@ public class ProdutoResource
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
     
+    @ApiOperation (value = "Encontra Produto pelo ID")
     @RequestMapping (path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Produto> findByID (@PathVariable Integer id)
     {
@@ -37,6 +41,7 @@ public class ProdutoResource
         return ResponseEntity.ok ().body (produto);
     }
     
+    @ApiOperation (value = "Lista Categorias com Paginacao")
     @RequestMapping (method = RequestMethod.GET)
     public ResponseEntity<Page<ProdutoDTO>> search (
             @RequestParam (value = "nome", defaultValue = "") String nome,

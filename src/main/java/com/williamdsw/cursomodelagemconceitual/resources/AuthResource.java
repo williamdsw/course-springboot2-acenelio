@@ -5,6 +5,9 @@ import com.williamdsw.cursomodelagemconceitual.security.JWTUtil;
 import com.williamdsw.cursomodelagemconceitual.security.UserSS;
 import com.williamdsw.cursomodelagemconceitual.services.AuthService;
 import com.williamdsw.cursomodelagemconceitual.services.UserService;
+
+import io.swagger.annotations.ApiOperation;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,7 @@ public class AuthResource
     
     // Gerar novo token
     @RequestMapping (value = "/refresh_token", method = RequestMethod.POST)
+    @ApiOperation (value = "Gera novo token")
     public ResponseEntity<Void> refreshToken (HttpServletResponse response)
     {
         UserSS user = UserService.authenticated ();
@@ -47,6 +51,7 @@ public class AuthResource
     
     // Gerar nova senha
     @RequestMapping (value = "/forgot", method = RequestMethod.POST)
+    @ApiOperation (value = "Gera nova senha")
     public ResponseEntity<Void> forgot (@Valid @RequestBody EmailDTO dto)
     {
         authService.sendNewPassword (dto.getEmail ());

@@ -17,6 +17,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.williamdsw.cursomodelagemconceitual.domain.Categoria;
 import com.williamdsw.cursomodelagemconceitual.dto.CategoriaDTO;
 import com.williamdsw.cursomodelagemconceitual.services.CategoriaService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 
 // Controlador REST que responde pelo endpoint "/categorias"
@@ -34,6 +39,7 @@ public class CategoriaResource
     // FUNCOES AUXILIARES
     
     @RequestMapping (method = RequestMethod.GET)
+    @ApiOperation (value = "Retorna todas Categorias")
     public ResponseEntity<List<CategoriaDTO>> findAll ()
     {
         List<Categoria> categorias = service.findAll ();
@@ -44,6 +50,7 @@ public class CategoriaResource
     // 1) Sera chamado utilizando "/page" na URI
     // 2) @RequestParam = Indica que e um parametro da requisicao
     // 3) Page = classe que encapsula informacoes sobre a paginacao.
+    @ApiOperation (value = "Retorna todas Categorias com paginação")
     @RequestMapping (value = "/page", method = RequestMethod.GET)
     public ResponseEntity<Page<CategoriaDTO>> findPage (
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
@@ -59,6 +66,7 @@ public class CategoriaResource
     // 1) RequestMethod.GET = Indica busca de dados
     // 2) @PathVariable = Indica que o valor sera recebido da URL
     // 3) ResponseEntity<?> = Encapsula varias informacoes de uma resposta HTTP
+    @ApiOperation (value = "Busca por ID")
     @RequestMapping (value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Categoria> findByID (@PathVariable Integer id)
     {
@@ -73,6 +81,7 @@ public class CategoriaResource
     // 5) @Valid = Indica que o parametro sera validado antes de todas operacoes
     // 6) @PreAuthorize ("hasAnyRole('ADMIN')") = Habilita esse endpoint apenas para administrador
     @PreAuthorize ("hasAnyRole('ADMIN')")
+    @ApiOperation (value = "Insere Categoria")
     @RequestMapping (method = RequestMethod.POST)
     public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO categoriaDTO)
     {
@@ -86,6 +95,7 @@ public class CategoriaResource
     // 2) No Update precisa combinar @RequestBody e @PathVariable
     // 3) ResponseEntity.noContent ().build () = Indica mensagem de 204 de sucesso mas sem conteudo de retorno
     @PreAuthorize ("hasAnyRole('ADMIN')")
+    @ApiOperation (value = "Atualiza Categoria")
     @RequestMapping (value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update (@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id)
     {
@@ -97,6 +107,12 @@ public class CategoriaResource
 
     // 1) RequestMethod.DELETE = Indica exclusao de dados
     @PreAuthorize ("hasAnyRole('ADMIN')")
+    @ApiOperation (value = "Exclui Categoria")
+    @ApiResponses (value = 
+	{
+		@ApiResponse (code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+		@ApiResponse (code = 401, message = "Código inexistente")
+    })
     @RequestMapping (value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteByID (@PathVariable Integer id)
     {

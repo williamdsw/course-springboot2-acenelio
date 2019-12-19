@@ -6,6 +6,9 @@ import com.williamdsw.cursomodelagemconceitual.dto.CidadeDTO;
 import com.williamdsw.cursomodelagemconceitual.dto.EstadoDTO;
 import com.williamdsw.cursomodelagemconceitual.services.CidadeService;
 import com.williamdsw.cursomodelagemconceitual.services.EstadoService;
+
+import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,7 @@ public class EstadoResource
     // ------------------------------------------------------------------------------------//
     // FUNCOES AUXILIARES
     
+    @ApiOperation (value = "Lista todas Cidades")
     @RequestMapping (method = RequestMethod.GET)
     public ResponseEntity<List<EstadoDTO>> findAllByOrderByNome ()
     {
@@ -42,6 +46,7 @@ public class EstadoResource
         return ResponseEntity.ok ().body (estadosDTO);
     }
     
+    @ApiOperation (value = "Encontra Cidades pelo ID do Estado")
     @RequestMapping (value = "/{estadoID}/cidades", method = RequestMethod.GET)
     public ResponseEntity<List<CidadeDTO>> findCidades (@PathVariable Integer estadoID)
     {
